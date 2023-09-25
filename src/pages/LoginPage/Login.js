@@ -94,7 +94,7 @@ export default function Login() {
       </div>
       <div className="register">
         <Link to="/signUp" className="forgotPassLink">
-          Đăng kí
+          Đăng ký
         </Link>
       </div>
     </div>

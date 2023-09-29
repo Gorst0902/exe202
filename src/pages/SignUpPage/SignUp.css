@@ -10,7 +10,7 @@
 }
 
 .page__signUp input {
-  width: 450px;
+  width: 350px;
   font-size: 27px;
   height: 50px;
   border-top: none;
@@ -23,13 +23,13 @@
 .select__signUp {
   margin-top: 20px;
   height: 50px;
-  width: 450px;
+  width: 350px;
   font-size: 25px;
   border-radius: 5px;
 }
 
 .signUp {
-  width: 450px;
+  width: 350px;
   height: 55px;
   margin-top: 25px;
   background: rgba(243, 112, 34, 1);

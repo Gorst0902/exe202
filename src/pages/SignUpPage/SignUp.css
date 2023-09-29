@@ -1,199 +1,48 @@
-@media (max-width: 768px) {
-  .page {
-    margin-top: 50px;
-    display: grid;
-    place-items: center;
-    width: 100%;
-  }
-
-  .logo {
-    height: 300px;
-    width: 300px;
-  }
-
-  input {
-    width: 500px;
-    font-size: 27px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-    margin-top: 20px;
-  }
-
-  .select {
-    margin-top: 20px;
-    height: 50px;
-    width: 510px;
-    font-size: 27px;
-    border-radius: 5px;
-  }
-
-  .signUp {
-    width: 520px;
-    height: 55px;
-    margin-top: 25px;
-    background: rgba(243, 112, 34, 1);
-    border: none;
-    color: white;
-    font-size: 30px;
-    border-radius: 5px;
-  }
-
-  .register {
-    color: rgba(243, 112, 34, 1);
-    text-decoration: none;
-    margin-top: 30px;
-    font-size: 25px;
-  }
+.page__signUp {
+  margin-top: 50px;
+  display: grid;
+  place-items: center;
+  width: 100%;
 }
 
-@media (max-width: 1024px) {
-  .page {
-    margin-top: 50px;
-    display: grid;
-    place-items: center;
-    width: 100%;
-  }
-
-  .logo {
-    height: 300px;
-    width: 300px;
-  }
-
-  input {
-    width: 500px;
-    font-size: 27px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-    margin-top: 20px;
-  }
-
-  .select {
-    margin-top: 20px;
-    height: 50px;
-    width: 510px;
-    font-size: 27px;
-    border-radius: 5px;
-  }
-
-  .signUp {
-    width: 520px;
-    height: 55px;
-    margin-top: 25px;
-    background: rgba(243, 112, 34, 1);
-    border: none;
-    color: white;
-    font-size: 30px;
-    border-radius: 5px;
-  }
-
-  .register {
-    color: rgba(243, 112, 34, 1);
-    text-decoration: none;
-    margin-top: 30px;
-    font-size: 25px;
-  }
+.logo {
+  height: 250px;
+  width: 250px;
 }
 
-@media (max-width: 1440px) {
-  .page {
-    margin-top: 50px;
-    display: grid;
-    place-items: center;
-    width: 100%;
-  }
-
-  .logo {
-    height: 300px;
-    width: 300px;
-  }
-
-  input {
-    width: 500px;
-    font-size: 27px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-    margin-top: 20px;
-  }
-
-  .select {
-    margin-top: 20px;
-    height: 50px;
-    width: 510px;
-    font-size: 27px;
-    border-radius: 5px;
-  }
-
-  .signUp {
-    width: 520px;
-    height: 55px;
-    margin-top: 25px;
-    background: rgba(243, 112, 34, 1);
-    border: none;
-    color: white;
-    font-size: 30px;
-    border-radius: 5px;
-  }
-
-  .register {
-    color: rgba(243, 112, 34, 1);
-    text-decoration: none;
-    margin-top: 30px;
-    font-size: 25px;
-  }
+.page__signUp input {
+  width: 450px;
+  font-size: 27px;
+  height: 50px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  margin-top: 15px;
 }
 
-@media (min-width: 1441px) {
-  .page {
-    margin-top: 50px;
-    display: grid;
-    place-items: center;
-    width: 100%;
-  }
+.select__signUp {
+  margin-top: 20px;
+  height: 50px;
+  width: 450px;
+  font-size: 25px;
+  border-radius: 5px;
+}
 
-  .logo {
-    height: 300px;
-    width: 300px;
-  }
+.signUp {
+  width: 450px;
+  height: 55px;
+  margin-top: 25px;
+  background: rgba(243, 112, 34, 1);
+  border: none;
+  color: white;
+  font-size: 30px;
+  border-radius: 5px;
+}
 
-  input {
-    width: 500px;
-    font-size: 27px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: none;
-    margin-top: 20px;
-  }
-
-  .select {
-    margin-top: 20px;
-    height: 50px;
-    width: 510px;
-    font-size: 27px;
-    border-radius: 5px;
-  }
-
-  .signUp {
-    width: 520px;
-    height: 55px;
-    margin-top: 25px;
-    background: rgba(243, 112, 34, 1);
-    border: none;
-    color: white;
-    font-size: 30px;
-    border-radius: 5px;
-  }
-
-  .register {
-    color: rgba(243, 112, 34, 1);
-    text-decoration: none;
-    margin-top: 30px;
-    font-size: 25px;
-  }
+.register {
+  color: rgba(243, 112, 34, 1);
+  text-decoration: none;
+  margin-top: 30px;
+  font-size: 25px;
 }

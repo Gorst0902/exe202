@@ -77,7 +77,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="page">
+    <div className="page__signUp">
       <div>
         <img src={myImage} alt="" className="logo" />
       </div>
@@ -125,7 +125,7 @@ export default function SignUp() {
         <select
           name="roleId"
           id="roleId"
-          className="select"
+          className="select__signUp"
           value={formData.roleId}
           onChange={handleInputChange}
         >

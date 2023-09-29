@@ -1,0 +1,14 @@
+.page__journey {
+  place-items: center;
+  display: grid;
+  width: 100%;
+}
+
+.journey, .list__journey {
+  width: 450px;
+}
+
+.start, .end {
+  font-size: 17px;
+  font-weight: bold;
+}

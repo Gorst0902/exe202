@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [roleId, setRoleId] = useState("Chủ xe");
+  const [roleId, setRoleId] = useState("1cb47d53-a12c-4fd6-a4cc-08dba3d1f4f1");
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export default function Login() {
       </div>
       <div>
         <input
-          className="email"
+          className="phone__login"
           type="text"
           placeholder="Số điện thoại"
           value={phoneNumber}
@@ -62,7 +62,7 @@ export default function Login() {
       </div>
       <div>
         <input
-          className="password"
+          className="password__login"
           type="password"
           placeholder="Mật khẩu"
           value={password}
@@ -73,7 +73,7 @@ export default function Login() {
         <select
           name=""
           id=""
-          className="select"
+          className="select__login"
           value={roleId}
           onChange={(e) => setRoleId(e.target.value)}
         >

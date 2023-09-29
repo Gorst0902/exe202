@@ -5,13 +5,13 @@
 }
 
 .logo {
-  height: 250px;
-  width: 250px;
+  height: 220px;
+  width: 220px;
 }
 
 .phone__login {
   height: 50px;
-  width: 400px;
+  width: 350px;
   font-size: 27px;
   border-top: none;
   border-left: none;
@@ -22,7 +22,7 @@
 .password__login {
   margin-top: 20px;
   height: 50px;
-  width: 400px;
+  width: 350px;
   font-size: 27px;
   border-top: none;
   border-left: none;
@@ -33,24 +33,25 @@
 .select__login {
   margin-top: 20px;
   height: 50px;
-  width: 400px;
+  width: 350px;
   font-size: 27px;
   border-radius: 5px;
 }
 
 .forgotPass {
-  margin-left: 200px;
+  margin-left: 170px;
   margin-top: 15px;
   font-size: 25px;
 }
 
 .forgotPassLink {
+  font-size: 20px;
   text-decoration: none;
   color: rgba(243, 112, 34, 1);
 }
 
 .login {
-  width: 400px;
+  width: 350px;
   height: 55px;
   margin-top: 30px;
   background: rgba(243, 112, 34, 1);

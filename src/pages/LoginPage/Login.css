@@ -12,7 +12,7 @@
 
 .phone__login {
   height: 50px;
-  width: 450px;
+  width: 400px;
   font-size: 27px;
   border-top: none;
   border-left: none;
@@ -23,7 +23,7 @@
 .password__login {
   margin-top: 20px;
   height: 50px;
-  width: 450px;
+  width: 400px;
   font-size: 27px;
   border-top: none;
   border-left: none;
@@ -34,13 +34,13 @@
 .select__login {
   margin-top: 20px;
   height: 50px;
-  width: 450px;
+  width: 400px;
   font-size: 27px;
   border-radius: 5px;
 }
 
 .forgotPass {
-  margin-left: 230px;
+  margin-left: 200px;
   margin-top: 15px;
   font-size: 25px;
 }
@@ -51,7 +51,7 @@
 }
 
 .login {
-  width: 450px;
+  width: 400px;
   height: 55px;
   margin-top: 30px;
   background: rgba(243, 112, 34, 1);

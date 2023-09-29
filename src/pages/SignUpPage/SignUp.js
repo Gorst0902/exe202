@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import myImage from "../images/logoExe.png";
 import "../SignUpPage/SignUp.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -13,6 +16,8 @@ export default function SignUp() {
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -63,9 +68,17 @@ export default function SignUp() {
       );
 
       if (response.ok) {
-        setSuccessMessage("Đăng ký thành công!");
+        toast.success("Đăng ký thành công!");
+
+        setTimeout(() => {
+          // Sau khi thông báo biến mất, chuyển hướng đến trang /login
+          navigate("/login");
+        }, 3000); // Thời gian chờ trước khi chuyển hướng (ở đây là 3 giây)
+
         setError("");
+        setSuccessMessage("Đăng ký thành công");
       } else {
+        toast.error("Đăng ký thất bại");
         setError("Đăng ký thất bại");
         setSuccessMessage("");
       }
@@ -133,17 +146,20 @@ export default function SignUp() {
           <option value="0170ca46-f56b-4575-a4cb-08dba3d1f4f1">Chủ hàng</option>
         </select>
       </div>
-      {error && <div className="error-message text-danger mt-1">{error}</div>}
-      {successMessage && (
-        <div className="success-message text-success mt-1">
-          {successMessage}
-        </div>
-      )}
+      <div>
+        {error && <div className="error-message text-danger mt-1">{error}</div>}
+        {/* {successMessage && (
+          <div className="success-message text-success mt-1">
+            {successMessage}
+          </div>
+        )} */}
+      </div>
       <div>
         <button className="signUp" onClick={handleSignUp}>
           Đăng Ký
         </button>
       </div>
+      <ToastContainer /> {/* Hiển thị ToastContainer để render thông báo */}
     </div>
   );
 }

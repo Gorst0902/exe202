@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import myImage from "../images/logoExe.png";
 import "../LoginPage/Login.css";
@@ -9,7 +10,6 @@ export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [roleId, setRoleId] = useState("1cb47d53-a12c-4fd6-a4cc-08dba3d1f4f1");
-  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -36,13 +36,14 @@ export default function Login() {
         navigate(`/${data.roleName.toLowerCase()}`);
       } else {
         if (response.status === 400) {
-          setError("Số điện thoại hoặc mật khẩu không chính xác");
+          // Thay đổi thông báo lỗi bằng react-toastify
+          toast.error("Số điện thoại hoặc mật khẩu không chính xác");
         } else {
-          setError("Đã xảy ra lỗi khi đăng nhập");
+          toast.error("Đã xảy ra lỗi khi đăng nhập");
         }
       }
     } catch (error) {
-      setError("Đã xảy ra lỗi khi đăng nhập");
+      toast.error("Đã xảy ra lỗi khi đăng nhập");
     }
   };
 
@@ -81,7 +82,6 @@ export default function Login() {
           <option value="0170ca46-f56b-4575-a4cb-08dba3d1f4f1">Chủ hàng</option>
         </select>
       </div>
-      {error && <div className="error-message">{error}</div>}
       <div className="forgotPass">
         <a href="" className="forgotPassLink">
           Quên mật khẩu?
@@ -97,6 +97,7 @@ export default function Login() {
           Đăng ký
         </Link>
       </div>
+      <ToastContainer />
     </div>
   );
 }

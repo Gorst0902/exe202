@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../Footer/Footer";
 import "../Reservation/Reservation.css";
+import Header from "../Header/Header";
 
 export default function Reservation() {
   const [journeyData, setJourneyData] = useState({});
@@ -11,10 +12,10 @@ export default function Reservation() {
   function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
     const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-    const dd = String(date.getDate()).padStart(2, '0');
-    const hh = String(date.getHours()).padStart(2, '0');
-    const min = String(date.getMinutes()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+    const dd = String(date.getDate()).padStart(2, "0");
+    const hh = String(date.getHours()).padStart(2, "0");
+    const min = String(date.getMinutes()).padStart(2, "0");
     return `${yyyy}/${mm}/${dd} ${hh}:${min}`;
   }
 
@@ -35,6 +36,7 @@ export default function Reservation() {
   }, []);
   return (
     <div>
+      <Header title="Đơn cần xe" />
       <div className="page__journey">
         {loading ? (
           <p>Loading data...</p>

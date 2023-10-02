@@ -18,7 +18,7 @@ function LocationComponent() {
         },
         (err) => {
           if (err.code === err.PERMISSION_DENIED) {
-            setError("User denied Geolocation.");
+            setError("Bạn chưa bật vị trí.");
           } else {
             setError(err.message);
           }
@@ -60,7 +60,7 @@ function LocationComponent() {
           <p>Longitude: {longitude}</p>
         </div>
       ) : (
-        <p>Đang cập nhập vị trí của bạn</p>
+        <p>Đang cập nhật vị trí của bạn</p>
       )}
       {error && <p>Error: {error}</p>}
     </div>

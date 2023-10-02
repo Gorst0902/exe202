@@ -7,7 +7,7 @@ export default function Header({ title }) {
     <div className="header">
       <div className="header__content d-flex justify-content-between">
         <div>
-          <img src={myImage} alt="" className="logo" />
+          <img src={myImage} alt="" className="header__logo" />
         </div>
         <div>
           <h4 className="header__title">{title}</h4>

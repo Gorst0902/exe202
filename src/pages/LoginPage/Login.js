@@ -16,7 +16,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const response = await fetch(
-        "https://tsddeliveryapi.azurewebsites.net/api/User/Login",
+        "https://tsdlinuxserverapi.azurewebsites.net/api/User/Login",
         {
           method: "POST",
           headers: {

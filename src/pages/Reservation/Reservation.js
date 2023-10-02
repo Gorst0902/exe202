@@ -3,11 +3,15 @@ import axios from "axios";
 import Footer from "../Footer/Footer";
 import "../Reservation/Reservation.css";
 import Header from "../Header/Header";
+import { useAuth } from "../../context/AuthContext";
+import LocationComponent from "../LocationComponent/LocationComponent";
 
 export default function Reservation() {
   const [journeyData, setJourneyData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { token } = useAuth();
+  
 
   function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
@@ -22,7 +26,7 @@ export default function Reservation() {
   useEffect(() => {
     axios
       .get(
-        "https://tsddeliveryapi.azurewebsites.net/api/Reservation/GetAllReservation"
+        "https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAllReservation"
       )
       .then((response) => {
         setJourneyData(response.data);
@@ -34,9 +38,13 @@ export default function Reservation() {
         setLoading(false);
       });
   }, []);
+
+  
+
   return (
     <div>
       <Header title="Đơn cần xe" />
+      <LocationComponent />
       <div className="page__journey">
         {loading ? (
           <p>Loading data...</p>
@@ -68,7 +76,7 @@ export default function Reservation() {
               <hr />
               <div className="money__journey d-flex justify-content-between">
                 <p>Báo giá: </p>
-                <p>{journey.totallPrice}</p>
+                <p>{journey.totallPrice}vnd</p>
               </div>
             </div>
           ))

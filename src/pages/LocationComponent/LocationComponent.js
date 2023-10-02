@@ -19,6 +19,7 @@ function LocationComponent() {
         (err) => {
           if (err.code === err.PERMISSION_DENIED) {
             setError("Bạn chưa bật vị trí.");
+            window.location.href = "settings";
           } else {
             setError(err.message);
           }

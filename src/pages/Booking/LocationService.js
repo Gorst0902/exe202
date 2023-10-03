@@ -25,6 +25,8 @@ import {
 import { Link } from "react-router-dom";
 import MyLocationIcon from "@mui/icons-material/MyLocation"; // Import icon
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import recImg from "../images/BPing.png";
+import delImg from "../images/APing.png";
 
 function AddressAutocomplete() {
   const [pickupAddress, setPickupAddress] = useState(null);
@@ -54,6 +56,17 @@ function AddressAutocomplete() {
   const [selectedServices, setSelectedServices] = useState([]);
   const [defaultServices, setDefaultServices] = useState([]);
 
+  const recIcon = L.icon({
+    iconUrl: recImg, // Đường dẫn đến hình ảnh
+    iconSize: [40, 40], // Kích thước của biểu tượng
+    iconAnchor: [20, 40], // Anchor point của biểu tượng, điểm mà biểu tượng sẽ được đặt tại vị trí của Marker
+  });
+  const delIcon = L.icon({
+    iconUrl: delImg, // Đường dẫn đến hình ảnh
+    iconSize: [40, 40], // Kích thước của biểu tượng
+    iconAnchor: [20, 40], // Anchor point của biểu tượng, điểm mà biểu tượng sẽ được đặt tại vị trí của Marker
+  });
+
   const renderMap = () => {
     return (
       <MapContainer
@@ -67,12 +80,18 @@ function AddressAutocomplete() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {pickupCoordinates && (
-          <Marker position={[pickupCoordinates.lat, pickupCoordinates.lng]}>
+          <Marker
+            position={[pickupCoordinates.lat, pickupCoordinates.lng]}
+            icon={recIcon}
+          >
             <Popup>Pickup Address</Popup>
           </Marker>
         )}
         {deliveryCoordinates && (
-          <Marker position={[deliveryCoordinates.lat, deliveryCoordinates.lng]}>
+          <Marker
+            position={[deliveryCoordinates.lat, deliveryCoordinates.lng]}
+            icon={delIcon}
+          >
             <Popup>Delivery Address</Popup>
           </Marker>
         )}

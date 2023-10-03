@@ -9,6 +9,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { AuthProvider } from "./context/AuthContext";
 import Footer from "./pages/Footer/Footer";
 import Reservation from "./pages/Reservation/Reservation";
+import AddressAutocomplete from "./pages/Booking/LocationService";
+import AddressForm from "./pages/Booking/DeliveryForm";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/driver" element={<Reservation />} />
+            <Route path="/user" element={<AddressAutocomplete />} />
+            <Route path="/book" element={<AddressForm />} />
           </Routes>
         </Router>
       </AuthProvider>

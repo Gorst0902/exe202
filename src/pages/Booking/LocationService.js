@@ -27,6 +27,8 @@ import MyLocationIcon from "@mui/icons-material/MyLocation"; // Import icon
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import recImg from "../images/BPing.png";
 import delImg from "../images/APing.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddressAutocomplete() {
   const [pickupAddress, setPickupAddress] = useState(null);
@@ -39,11 +41,8 @@ function AddressAutocomplete() {
 
   const [error, setError] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-
   const [mapCenter, setMapCenter] = useState([10.776444, 106.70112]);
-
   const [map, setMap] = useState(null); // Sử dụng state để theo dõi bản đồ
-
   const [route, setRoute] = useState(null); // Thêm trạng thái để lưu trữ đường đi
   const mapRef = useRef();
 
@@ -72,7 +71,7 @@ function AddressAutocomplete() {
       <MapContainer
         center={mapCenter}
         zoom={13}
-        style={{ height: "400px", width: "100%" }}
+        style={{ height: "350px", width: "100%" }}
         ref={mapRef} // Đảm bảo rằng mapRef đã được thiết lập
       >
         <TileLayer
@@ -216,7 +215,7 @@ function AddressAutocomplete() {
       setShowVehicleSelectBox(true); // Khi xác nhận địa chỉ, hiển thị select box
       setMapConfirmed(true); // Cập nhật trạng thái mapConfirmed thành true
     } else {
-      setError("Please select pickup, delivery addresses, and a vehicle type.");
+      toast.error("Hãy điền đầy đủ địa chỉ!");
     }
   };
 
@@ -476,6 +475,7 @@ function AddressAutocomplete() {
                 )}
               />
               <Autocomplete
+                sx={{ marginBottom: "80px" }}
                 value={deliveryAddress}
                 onChange={handleDeliveryChange}
                 options={deliveryOptions}
@@ -551,8 +551,7 @@ function AddressAutocomplete() {
                   Xác nhận địa chỉ
                 </Button>
               </div>
-
-              {error && <p>{error}</p>}
+              <ToastContainer />
             </div>
           ) : (
             <div>
@@ -583,7 +582,7 @@ function AddressAutocomplete() {
               )}
               {services.length > 0 && (
                 <div>
-                  <div>
+                  <div style={{ marginBottom: "70px" }}>
                     <h5>Dịch vụ</h5>
                     {services
                       .filter((service) => service.isShow)

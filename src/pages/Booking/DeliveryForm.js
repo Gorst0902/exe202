@@ -11,6 +11,8 @@ import {
   Container,
   Grid,
 } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddressForm(props) {
   const { token } = useAuth();
@@ -149,6 +151,7 @@ function AddressForm(props) {
       .catch((error) => {
         // Xử lý lỗi từ API ở đây
         console.error(error);
+        toast.error("Vui lòng thử lại!");
         // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết sau khi đặt hàng thất bại
       });
   };
@@ -267,7 +270,6 @@ function AddressForm(props) {
               }}
             />
           </Grid>
-
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -351,7 +353,7 @@ function AddressForm(props) {
                 },
               }}
             />
-          </Grid>
+          </Grid>{" "}
           <Grid item xs={12}>
             <RadioGroup
               row
@@ -415,6 +417,19 @@ function AddressForm(props) {
               />
             </Grid>
           )}
+          <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: "80px",
+              }}
+            >
+              <h5>Tổng cộng: {totalAmount}₫</h5>
+            </Grid>
+          </Grid>
           <Grid
             className="container"
             style={{
@@ -442,6 +457,7 @@ function AddressForm(props) {
             </Button>
           </Grid>
         </Grid>
+        <ToastContainer />
       </form>
     </Container>
   );

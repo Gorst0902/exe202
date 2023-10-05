@@ -12,6 +12,8 @@ import Reservation from "./pages/Reservation/Reservation";
 import ReservationDetail from "./pages/ReservationDetail/ReservationDetail";
 import AddressAutocomplete from "./pages/Booking/LocationService";
 import AddressForm from "./pages/Booking/DeliveryForm";
+import History from "./pages/UserHistory/UserHistory";
+import HistoryDetail from "./pages/UserHistory/HistoryDetail";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/reservationDetail/:reservationId" element={<ReservationDetail />} />
             <Route path="/user" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />
+            <Route path="/userhistory" element={<History />} />
+            <Route path="/userhistory/:id" element={<HistoryDetail />} />
           </Routes>
         </Router>
       </AuthProvider>

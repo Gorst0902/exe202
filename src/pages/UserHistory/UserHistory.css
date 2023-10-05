@@ -1,0 +1,28 @@
+@media screen and (max-width: 768px) {
+  .ellipsis-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+  }
+
+  .expanded-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-width: unset;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .img__search {
+    width: 250px;
+    height: 250px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .img__search {
+    width: 150px;
+    height: 150px;
+  }
+}

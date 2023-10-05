@@ -158,7 +158,7 @@ function HistoryDetail() {
               </Grid>
             </Grid>
           </Grid>
-          {["OnTheWayToPickupPoint", "InDelivery"].includes(
+          {["OnTheWayToPickupPoint", "InDelivery", "Completed"].includes(
             reservationData.reservationStatus
           ) && (
             <Grid

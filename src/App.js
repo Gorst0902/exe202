@@ -16,6 +16,8 @@ import History from "./pages/UserHistory/UserHistory";
 import HistoryDetail from "./pages/UserHistory/HistoryDetail";
 import PageUserHistory from "./pages/UserHistory/FormUserHistory";
 import UserHeader from "./pages/UserPage/UserHeader";
+import HomePage from "./pages/HomePage/HomePage";
+import UserPage from "./pages/HomePage/UserHomePage";
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
         {" "}
         <Router>
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/footer" element={<Footer />} />
@@ -32,12 +35,11 @@ function App() {
               path="/reservationDetail/:reservationId"
               element={<ReservationDetail />}
             />
-            <Route path="/user" element={<AddressAutocomplete />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/create" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />
             <Route path="/userhistory" element={<PageUserHistory />} />
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
-
-            <Route path="/header" element={<UserHeader />} />
           </Routes>
         </Router>
       </AuthProvider>

@@ -57,7 +57,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://tsddeliveryapi.azurewebsites.net/api/User/Register",
+        "https://tsdlinuxserverapi.azurewebsites.net/api/User/Register",
         {
           method: "POST",
           headers: {

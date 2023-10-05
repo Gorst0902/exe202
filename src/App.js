@@ -9,6 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { AuthProvider } from "./context/AuthContext";
 import Footer from "./pages/Footer/Footer";
 import Reservation from "./pages/Reservation/Reservation";
+import ReservationDetail from "./pages/ReservationDetail/ReservationDetail";
 import AddressAutocomplete from "./pages/Booking/LocationService";
 import AddressForm from "./pages/Booking/DeliveryForm";
 import History from "./pages/UserHistory/UserHistory";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/driver" element={<Reservation />} />
+            <Route path="/reservationDetail/:reservationId" element={<ReservationDetail />} />
             <Route path="/user" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />
             <Route path="/userhistory" element={<History />} />

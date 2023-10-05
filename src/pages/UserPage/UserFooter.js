@@ -6,7 +6,7 @@ export default function UserFooter() {
   return (
     <div className="footer">
       <div className="footer__content">
-        <Link to="/home">
+        <Link to="/user">
           <button>
             <i className="fa-solid fa-house" />
           </button>
@@ -16,7 +16,7 @@ export default function UserFooter() {
             <i class="fa-solid fa-clock-rotate-left"></i>
           </button>
         </Link>
-        <Link to="/user">
+        <Link to="/create">
           <button className="search">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>

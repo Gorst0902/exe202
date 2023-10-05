@@ -14,6 +14,8 @@ import AddressAutocomplete from "./pages/Booking/LocationService";
 import AddressForm from "./pages/Booking/DeliveryForm";
 import History from "./pages/UserHistory/UserHistory";
 import HistoryDetail from "./pages/UserHistory/HistoryDetail";
+import PageUserHistory from "./pages/UserHistory/FormUserHistory";
+import UserHeader from "./pages/UserPage/UserHeader";
 
 function App() {
   return (
@@ -26,11 +28,16 @@ function App() {
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/driver" element={<Reservation />} />
-            <Route path="/reservationDetail/:reservationId" element={<ReservationDetail />} />
+            <Route
+              path="/reservationDetail/:reservationId"
+              element={<ReservationDetail />}
+            />
             <Route path="/user" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />
-            <Route path="/userhistory" element={<History />} />
+            <Route path="/userhistory" element={<PageUserHistory />} />
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
+
+            <Route path="/header" element={<UserHeader />} />
           </Routes>
         </Router>
       </AuthProvider>

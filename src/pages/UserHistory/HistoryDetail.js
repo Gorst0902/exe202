@@ -6,6 +6,8 @@ import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { format } from "date-fns";
+import UserHeader from "../UserPage/UserHeader";
+import UserFooter from "../UserPage/UserFooter";
 
 function HistoryDetail() {
   const { id } = useParams();
@@ -51,152 +53,159 @@ function HistoryDetail() {
   }, [id]);
 
   return (
-    <Container>
-      {reservationData ? (
-        <>
-          {" "}
-          <Grid className="mt-3">
-            <Typography
-              textAlign="right"
-              variant="h6"
-              sx={{
-                color: statusMapping[reservationData.reservationStatus].color,
-              }}
-            >
-              {statusMapping[reservationData.reservationStatus].label}
-            </Typography>
-          </Grid>
-          {["Completed", "OnTheWayToPickupPoint", "InDelivery"].includes(
-            reservationData.reservationStatus
-          ) ? (
-            <Grid className="mt-2" container alignItems="center">
-              <Grid item>
-                <PermIdentityIcon
-                  sx={{ fontSize: "40px", marginRight: "10px" }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Typography sx={{ fontWeight: "bold" }} variant="h6">
-                  {reservationData.driverDto.fullName}
-                </Typography>
-                <Typography variant="body1">
-                  {reservationData.driverDto.phoneNumber}
-                </Typography>
-              </Grid>
-            </Grid>
-          ) : null}
-          <Divider />
-          <Grid container alignItems="center" className="mt-3">
-            <Grid item xs={6}>
-              <Typography sx={{ fontWeight: "bold" }} variant="h6">
-                Thanh toán:
-              </Typography>
-            </Grid>
-            <Grid item xs={6} textAlign="right">
-              <Typography sx={{ fontWeight: "bold" }} variant="h6">
-                {reservationData.totallPrice} đ
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid container alignItems="center" className="mt-3">
-            <Grid>
-              <Typography sx={{ fontWeight: "bold" }} variant="h6">
-                Chi tiết đơn hàng
-              </Typography>
-              <Typography sx={{ fontWeight: "bold" }}>
-                {format(
-                  new Date(reservationData.pickUpDateTime),
-                  "HH:mm, dd/MM/yyyy"
-                )}
-              </Typography>
-            </Grid>
-            <Grid container alignItems="center">
-              <Grid item xs={6}>
-                <Typography>Xe máy</Typography>
-              </Grid>
-              <Grid item xs={6} textAlign="right">
-                <Typography> {reservationData.distance}km</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Divider />
-          <Grid className="mt-1" container alignItems="center" spacing={2}>
-            <Grid item container alignItems="center" spacing={1}>
-              <Grid item>
-                <ArrowCircleUpIcon color="primary" />
-              </Grid>
-              <Grid item>
-                <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
-                  {reservationData.sender}
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  className={`ellipsis-text ${expanded ? "expanded-text" : ""}`}
-                  sx={{ fontSize: "13px", cursor: "pointer" }}
-                  onClick={toggleExpanded}
-                >
-                  {reservationData.sendLocation}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item container alignItems="center" spacing={1}>
-              <Grid item>
-                <ArrowCircleDownIcon sx={{ color: "red" }} />
-              </Grid>
-              <Grid item>
-                <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
-                  {reservationData.recipientName}
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  className={`ellipsis-text ${expanded ? "expanded-text" : ""}`}
-                  sx={{ fontSize: "13px", cursor: "pointer" }}
-                  onClick={toggleExpanded}
-                >
-                  {reservationData.reciveLocation}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          {["OnTheWayToPickupPoint", "InDelivery", "Completed"].includes(
-            reservationData.reservationStatus
-          ) && (
-            <Grid
-              className="container"
-              style={{
-                position: "fixed",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                textAlign: "center",
-              }}
-              item
-              xs={12}
-            >
-              <Button
-                className="mb-3"
-                style={{
-                  borderRadius: "12px",
-                  backgroundColor: "#F37022",
-                  height: "50px",
-                  width: "100%", // Make the button full-width
-                  color: "white", // Set text color to white for better visibility
+    <>
+      <UserHeader />
+      <Container>
+        {reservationData ? (
+          <>
+            {" "}
+            <Grid className="mt-3">
+              <Typography
+                textAlign="right"
+                variant="h6"
+                sx={{
+                  color: statusMapping[reservationData.reservationStatus].color,
                 }}
               >
-                <a
-                  href={`tel:${reservationData.driverDto.phoneNumber}`}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Gọi ngay
-                </a>
-              </Button>
+                {statusMapping[reservationData.reservationStatus].label}
+              </Typography>
             </Grid>
-          )}
-        </>
-      ) : (
-        <Typography>Loading...</Typography>
-      )}
-    </Container>
+            {["Completed", "OnTheWayToPickupPoint", "InDelivery"].includes(
+              reservationData.reservationStatus
+            ) ? (
+              <Grid className="mt-2" container alignItems="center">
+                <Grid item>
+                  <PermIdentityIcon
+                    sx={{ fontSize: "40px", marginRight: "10px" }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography sx={{ fontWeight: "bold" }} variant="h6">
+                    {reservationData.driverDto.fullName}
+                  </Typography>
+                  <Typography variant="body1">
+                    {reservationData.driverDto.phoneNumber}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : null}
+            <Divider />
+            <Grid container alignItems="center" className="mt-3">
+              <Grid item xs={6}>
+                <Typography sx={{ fontWeight: "bold" }} variant="h6">
+                  Thanh toán:
+                </Typography>
+              </Grid>
+              <Grid item xs={6} textAlign="right">
+                <Typography sx={{ fontWeight: "bold" }} variant="h6">
+                  {reservationData.totallPrice} đ
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" className="mt-3">
+              <Grid>
+                <Typography sx={{ fontWeight: "bold" }} variant="h6">
+                  Chi tiết đơn hàng
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  {format(
+                    new Date(reservationData.pickUpDateTime),
+                    "HH:mm, dd/MM/yyyy"
+                  )}
+                </Typography>
+              </Grid>
+              <Grid container alignItems="center">
+                <Grid item xs={6}>
+                  <Typography>Xe máy</Typography>
+                </Grid>
+                <Grid item xs={6} textAlign="right">
+                  <Typography> {reservationData.distance}km</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid className="mt-1" container alignItems="center" spacing={2}>
+              <Grid item container alignItems="center" spacing={1}>
+                <Grid item>
+                  <ArrowCircleUpIcon color="primary" />
+                </Grid>
+                <Grid item>
+                  <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
+                    {reservationData.sender}
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    className={`ellipsis-text ${
+                      expanded ? "expanded-text" : ""
+                    }`}
+                    sx={{ fontSize: "13px", cursor: "pointer" }}
+                    onClick={toggleExpanded}
+                  >
+                    {reservationData.sendLocation}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item container alignItems="center" spacing={1}>
+                <Grid item>
+                  <ArrowCircleDownIcon sx={{ color: "red" }} />
+                </Grid>
+                <Grid item>
+                  <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
+                    {reservationData.recipientName}
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    className={`ellipsis-text ${
+                      expanded ? "expanded-text" : ""
+                    }`}
+                    sx={{ fontSize: "13px", cursor: "pointer" }}
+                    onClick={toggleExpanded}
+                  >
+                    {reservationData.reciveLocation}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            {["OnTheWayToPickupPoint", "InDelivery"].includes(
+              reservationData.reservationStatus
+            ) && (
+              <Grid
+                className="container"
+                style={{
+                  position: "fixed",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  textAlign: "center",
+                }}
+                item
+                xs={12}
+              >
+                <Button
+                  className="mb-3"
+                  style={{
+                    borderRadius: "12px",
+                    backgroundColor: "#F37022",
+                    height: "50px",
+                    width: "100%", // Make the button full-width
+                    color: "white", // Set text color to white for better visibility
+                  }}
+                >
+                  <a
+                    href={`tel:${reservationData.driverDto.phoneNumber}`}
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    Gọi ngay
+                  </a>
+                </Button>
+              </Grid>
+            )}
+          </>
+        ) : (
+          <Typography>Loading...</Typography>
+        )}
+      </Container>
+    </>
   );
 }
 export default HistoryDetail;

@@ -155,6 +155,14 @@ function AddressForm(props) {
         // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết sau khi đặt hàng thất bại
       });
   };
+  function formatMoney(amount) {
+    // Sử dụng Intl.NumberFormat để định dạng số tiền
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
+  }
+  const formattedAmount = formatMoney(totalAmount);
 
   return (
     <Container className="mt-4" maxWidth="xs">
@@ -427,7 +435,7 @@ function AddressForm(props) {
                 marginBottom: "80px",
               }}
             >
-              <h5>Tổng cộng: {totalAmount}₫</h5>
+              <h5>Tổng cộng: {formattedAmount}</h5>
             </Grid>
           </Grid>
           <Grid

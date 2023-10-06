@@ -8,6 +8,15 @@ import { useAuth } from "../../context/AuthContext";
 import { format } from "date-fns";
 import UserHeader from "../UserPage/UserHeader";
 import UserFooter from "../UserPage/UserFooter";
+import { BeatLoader } from "react-spinners";
+import { css } from "@emotion/react";
+
+const override = css`
+  margin-top: 20px;
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 function HistoryDetail() {
   const { id } = useParams();
@@ -98,7 +107,10 @@ function HistoryDetail() {
               </Grid>
               <Grid item xs={6} textAlign="right">
                 <Typography sx={{ fontWeight: "bold" }} variant="h6">
-                  {reservationData.totallPrice} đ
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(reservationData.totallPrice)}
                 </Typography>
               </Grid>
             </Grid>
@@ -202,7 +214,20 @@ function HistoryDetail() {
             )}
           </>
         ) : (
-          <Typography>Loading...</Typography>
+          <Container
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <BeatLoader
+              css={override} // Define the CSS styles for the loading spinner (you can customize it)
+              size={10} // Set the size of the spinner
+              color={"#F37022"} // Customize the color of the spinner
+              loading={!reservationData} // Set loading to true when reservationData is null
+            />
+          </Container>
         )}
       </Container>
     </>

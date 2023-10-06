@@ -15,7 +15,15 @@ import "../UserHistory/UserHistory.css";
 import searching from "../images/searching.png";
 import { format } from "date-fns"; // Import thư viện date-fns
 import { Link } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
+import { css } from "@emotion/react";
 
+const override = css`
+  margin-top: 20px;
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 function History() {
   const [reservationData, setReservationData] = useState([]);
   const [loading, setLoading] = useState(true); // Biến trạng thái cho biết liệu đang nạp dữ liệu hay không
@@ -67,18 +75,20 @@ function History() {
 
   return (
     <Container>
-      {loading ? ( // Kiểm tra nếu đang nạp dữ liệu
-        // Hiển thị skeleton khi đang nạp dữ liệu
-        <Skeleton
-          sx={{
-            border: "1px solid #F37022",
-            borderRadius: "15px",
-            marginBottom: "5px",
+      {loading ? (
+        <Container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          variant="rect"
-          height={100}
-          animation="wave"
-        />
+        >
+          <BeatLoader
+            css={override} // Define the CSS styles for the loading spinner (you can customize it)
+            size={10} // Set the size of the spinner
+            color={"#F37022"} // Customize the color of the spinner// Set loading to true when reservationData is null
+          />
+        </Container>
       ) : Array.isArray(reservationData) && reservationData.length > 0 ? (
         reservationData.map((reservation) => (
           <Link
@@ -169,7 +179,10 @@ function History() {
           }}
         >
           <img src={searching} className="img__search" />
-          <h5> Bạn chưa đặt giao đơn hàng nào</h5>
+          <h5 className="mt-4" style={{ fontWeight: "bold" }}>
+            {" "}
+            Bạn chưa đặt giao đơn hàng nào
+          </h5>
         </Typography>
       )}
     </Container>

@@ -18,6 +18,12 @@ import PageUserHistory from "./pages/UserHistory/FormUserHistory";
 import UserHeader from "./pages/UserPage/UserHeader";
 import HomePage from "./pages/HomePage/HomePage";
 import UserPage from "./pages/HomePage/UserHomePage";
+import AdminLoginForm from "./pages/LoginPage/AdminLogin";
+import AdminListItem from "./pages/AdminPage/ListItem";
+import UserList from "./pages/AdminPage/UserList";
+import OrderList from "./pages/AdminPage/OrderList";
+import TransactionList from "./pages/AdminPage/Transaction";
+import OrderDetail from "./pages/AdminPage/OrderDetail";
 
 function App() {
   return (
@@ -40,6 +46,14 @@ function App() {
             <Route path="/book" element={<AddressForm />} />
             <Route path="/userhistory" element={<PageUserHistory />} />
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
+
+            {/* Admin Page */}
+            <Route path="/admin/login" element={<AdminLoginForm />} />
+            <Route path="/admin/dashboard" element={<AdminListItem />} />
+            <Route path="/admin/userlist" element={<UserList />} />
+            <Route path="/admin/orderlist" element={<OrderList />} />
+            <Route path="/admin/orderdetail/:id" element={<OrderDetail />} />
+            <Route path="/admin/transaction" element={<TransactionList />} />
           </Routes>
         </Router>
       </AuthProvider>

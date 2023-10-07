@@ -146,7 +146,7 @@ function AddressForm(props) {
           window.location.href = paymentUrl;
         }
 
-        // navigate("/order-success"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
+        // navigate("/ordersuccess"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
       })
       .catch((error) => {
         // Xử lý lỗi từ API ở đây

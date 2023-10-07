@@ -27,6 +27,8 @@ import OrderDetail from "./pages/AdminPage/OrderDetail";
 import Dashboard from "./pages/AdminPage/Dashboard";
 import AutoComplete from "./pages/Booking/Autocomplete";
 import OrderSuccess from "./pages/RedirectPage/OrderSuccess";
+import ErrorPage from "./pages/RedirectPage/Error";
+import OrderFail from "./pages/RedirectPage/OrderFail";
 
 function App() {
   return (
@@ -64,6 +66,8 @@ function App() {
 
             {/* Redirect Page */}
             <Route path="/ordersuccess" element={<OrderSuccess />} />
+            <Route path="/orderfail" element={<OrderFail />} />
+            <Route path="/error" element={<ErrorPage />} />
           </Routes>
         </Router>
       </AuthProvider>

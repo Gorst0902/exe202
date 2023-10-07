@@ -1,17 +1,18 @@
 import React from "react";
 import { Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import success from "../images/success.png";
+import error from "../images/404.png";
 import UserHeader from "../UserPage/UserHeader";
 import Footer from "../Footer/Footer";
 
 const specialTextStyle = {
   fontSize: "30px", // Kích thước chữ
   fontWeight: "bold", // Độ đậm
-  color: "#61d686", // Màu chữ
+  color: "#F37022", // Màu chữ
+  textTransform: "uppercase", // Chuyển đổi chữ thành HOA
 };
 
-export default function OrderSuccess() {
+export default function ErrorPage() {
   return (
     <div>
       <UserHeader />
@@ -25,14 +26,14 @@ export default function OrderSuccess() {
           height: "60vh",
         }}
       >
-        <img style={{ width: "90px" }} src={success} alt="Success" />
+        <img style={{ width: "90px" }} src={error} alt="Error" />
         <Typography
-          className="my-3"
+          className="mt-2"
           variant="h4"
           gutterBottom
           style={specialTextStyle}
         >
-          Thanh toán thành công
+          Page not found
         </Typography>
       </Container>
       <Footer />

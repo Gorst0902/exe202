@@ -26,6 +26,7 @@ import TransactionList from "./pages/AdminPage/Transaction";
 import OrderDetail from "./pages/AdminPage/OrderDetail";
 import Dashboard from "./pages/AdminPage/Dashboard";
 import AutoComplete from "./pages/Booking/Autocomplete";
+import OrderSuccess from "./pages/RedirectPage/OrderSuccess";
 
 function App() {
   return (
@@ -60,6 +61,9 @@ function App() {
 
             {/* test Autocomplete */}
             <Route path="/test" element={<AutoComplete />} />
+
+            {/* Redirect Page */}
+            <Route path="/ordersuccess" element={<OrderSuccess />} />
           </Routes>
         </Router>
       </AuthProvider>

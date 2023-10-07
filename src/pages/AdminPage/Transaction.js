@@ -166,10 +166,12 @@ export default function TransactionList() {
                     </TableCell>
 
                     <TableCell align="center" className="fw-bold">
-                      {new Intl.NumberFormat("vi-VN", {
+                      {`${
+                        transaction.transactionType === 0 ? "+" : "-"
+                      } ${new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
-                      }).format(transaction.price)}
+                      }).format(transaction.price)}`}
                     </TableCell>
                   </TableRow>
                 ))}

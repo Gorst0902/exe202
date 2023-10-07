@@ -29,6 +29,7 @@ import recImg from "../images/BPing.png";
 import delImg from "../images/APing.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../../context/AuthContext";
 
 function AddressAutocomplete() {
   const [pickupAddress, setPickupAddress] = useState(null);
@@ -54,6 +55,7 @@ function AddressAutocomplete() {
   const [services, setServices] = useState([]); // State để lưu danh sách dịch vụ
   const [selectedServices, setSelectedServices] = useState([]);
   const [defaultServices, setDefaultServices] = useState([]);
+  const { token } = useAuth();
 
   const recIcon = L.icon({
     iconUrl: recImg, // Đường dẫn đến hình ảnh

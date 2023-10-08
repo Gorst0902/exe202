@@ -29,6 +29,10 @@ import AutoComplete from "./pages/Booking/Autocomplete";
 import OrderSuccess from "./pages/RedirectPage/OrderSuccess";
 import ErrorPage from "./pages/RedirectPage/Error";
 import OrderFail from "./pages/RedirectPage/OrderFail";
+import SettingList from "./pages/SettingPage/SettingList";
+import UserInfo from "./pages/SettingPage/UserInfo";
+import VehicleInfo from "./pages/SettingPage/VehicleInfo";
+import UserTransaction from "./pages/SettingPage/UserTransaction";
 
 function App() {
   return (
@@ -68,6 +72,12 @@ function App() {
             <Route path="/ordersuccess" element={<OrderSuccess />} />
             <Route path="/orderfail" element={<OrderFail />} />
             <Route path="/error" element={<ErrorPage />} />
+
+            {/* Setting List */}
+            <Route path="/settings" element={<SettingList />} />
+            <Route path="/userinfo" element={<UserInfo />} />
+            <Route path="/vehicleinfo" element={<VehicleInfo />} />
+            <Route path="/transaction" element={<UserTransaction />} />
           </Routes>
         </Router>
       </AuthProvider>

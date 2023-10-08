@@ -31,7 +31,7 @@ const AdminLoginForm = () => {
       const response = await axios.post(
         "https://tsdlinuxserverapi.azurewebsites.net/api/User/Login",
         {
-          phoneNumber: "0395746139",
+          phoneNumber: username,
           password: password, // Sử dụng password từ state
           roleId: "eebc82eb-8893-43a7-a4ca-08dba3d1f4f1",
         }

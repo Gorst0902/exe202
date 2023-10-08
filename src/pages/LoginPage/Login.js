@@ -34,9 +34,10 @@ export default function Login() {
         const data = await response.json();
         // Save the user ID in localStorage
         const userId = data.id; // Assuming the API response has an "id" field for the user ID
-
+        const roleUser = data.roleName;
         // Save the user ID in localStorage
         localStorage.setItem("userId", userId);
+        localStorage.setItem("roleUser", roleUser);
         login(data.token);
         navigate(`/${data.roleName.toLowerCase()}`);
       } else {

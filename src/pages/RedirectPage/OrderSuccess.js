@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import success from "../images/success.png";
 import UserHeader from "../UserPage/UserHeader";
 import Footer from "../Footer/Footer";
+import UserFooter from "../UserPage/UserFooter";
 
 const specialTextStyle = {
   fontSize: "30px", // Kích thước chữ
@@ -35,7 +36,7 @@ export default function OrderSuccess() {
           Thanh toán thành công
         </Typography>
       </Container>
-      <Footer />
+      <UserFooter />
     </div>
   );
 }

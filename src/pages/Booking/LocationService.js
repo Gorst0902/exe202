@@ -106,7 +106,12 @@ function AddressAutocomplete() {
       async function fetchServices() {
         try {
           const response = await axios.get(
-            `https://tsdlinuxserverapi.azurewebsites.net/api/Service/GetServicesByVehicleTypeId?vehicleTypeId=${selectedVehicle}`
+            `https://tsdlinuxserverapi.azurewebsites.net/api/Service/GetServicesByVehicleTypeId?vehicleTypeId=${selectedVehicle}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include the Bearer token in the header
+              },
+            }
           );
           if (response.data) {
             setServices(response.data);
@@ -117,14 +122,19 @@ function AddressAutocomplete() {
       }
       fetchServices();
     }
-  }, [selectedVehicle]);
+  }, [selectedVehicle, token]);
 
   useEffect(() => {
     // Gọi API để lấy danh sách loại xe khi component được tải
     async function fetchVehicleTypes() {
       try {
         const response = await axios.get(
-          "https://tsdlinuxserverapi.azurewebsites.net/api/VehicleType/GetAllVehicleType"
+          "https://tsdlinuxserverapi.azurewebsites.net/api/VehicleType/GetAllVehicleType",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the Bearer token in the header
+            },
+          }
         );
         if (response.data) {
           setVehicleTypes(response.data); // Cập nhật danh sách loại xe từ API
@@ -135,7 +145,7 @@ function AddressAutocomplete() {
     }
 
     fetchVehicleTypes();
-  }, []);
+  }, [token]);
 
   const fetchDefaultServices = async () => {
     try {
@@ -190,6 +200,11 @@ function AddressAutocomplete() {
         // Gọi API tính tiền với danh sách dịch vụ đã chọn và dịch vụ có "isShow" là false
         const response = await axios.post(
           "https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/Calculate_Amount_By_Services_And_Km",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the Bearer token in the header
+            },
+          },
           {
             distance: parseFloat(distance),
             serviceIds: allSelectedServices,

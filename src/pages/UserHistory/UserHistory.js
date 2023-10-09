@@ -74,7 +74,7 @@ function History() {
   };
 
   return (
-    <Container>
+    <Container sx={{ marginBottom: "100px" }}>
       {loading ? (
         <Container
           style={{

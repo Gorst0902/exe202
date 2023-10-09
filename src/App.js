@@ -69,7 +69,7 @@ function App() {
             <Route path="/test" element={<AutoComplete />} />
 
             {/* Redirect Page */}
-            <Route path="/ordersuccess" element={<OrderSuccess />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
             <Route path="/orderfail" element={<OrderFail />} />
             <Route path="/error" element={<ErrorPage />} />
 

@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import momo from "../images/momo.png";
+import zalo from "../images/zalo.png";
+import vnpay from "../images/vnpay.png";
 
 function AddressForm(props) {
   const { token } = useAuth();
@@ -23,6 +26,7 @@ function AddressForm(props) {
   const [recipientPhone, setRecipientPhone] = useState("");
   const [isOrderNow, setIsOrderNow] = useState(true); // Mặc định đặt hàng ngay
   const [pickUpDateTime, setPickUpDateTime] = useState(null); // Thời gian đặt hàng lịch hẹn
+  const [paymentMethod, setPaymentMethod] = useState("Momo"); // Mặc định là Momo
 
   const [goodsDto, setGoodsDto] = useState({
     name: "",
@@ -112,7 +116,7 @@ function AddressForm(props) {
       },
       totalPrice: totalAmount, // Sử dụng totalAmount đã tính trước đó
       serviceIds: allservice, // Sử dụng allservice đã tính trước đó
-      paymentMethod: "Momo", // Mặc định là Momo
+      paymentMethod: paymentMethod,
     };
 
     // Gọi API để hoàn tất đặt hàng
@@ -146,7 +150,7 @@ function AddressForm(props) {
           window.location.href = paymentUrl;
         }
 
-        // navigate("/order-success"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
+        // navigate("/ordersuccess"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
       })
       .catch((error) => {
         // Xử lý lỗi từ API ở đây
@@ -163,7 +167,6 @@ function AddressForm(props) {
     }).format(amount);
   }
   const formattedAmount = formatMoney(totalAmount);
-
   return (
     <Container className="mt-4" maxWidth="xs">
       <h5 className="mb-3">Thông tin đơn hàng</h5>
@@ -424,8 +427,94 @@ function AddressForm(props) {
                 }}
               />
             </Grid>
-          )}
+          )}{" "}
           <Grid item xs={12}>
+            <h6>Phương thức thanh toán</h6>
+          </Grid>
+          <Grid item xs={12}>
+            <RadioGroup
+              row
+              aria-label="Payment Method"
+              name="paymentMethod"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <Grid item xs={12}>
+                {" "}
+                <FormControlLabel
+                  value="Momo"
+                  control={
+                    <Radio
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "#F37022", // Đổi màu dấu tick thành F37022
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <div>
+                      <img
+                        src={momo}
+                        alt="Momo"
+                        style={{ marginRight: "8px", width: "20px" }}
+                      />
+                      Momo
+                    </div>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  value="ZaloPay"
+                  control={
+                    <Radio
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "#F37022", // Đổi màu dấu tick thành F37022
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <div>
+                      <img
+                        src={zalo}
+                        alt="ZaloPay"
+                        style={{ marginRight: "8px", width: "20px" }}
+                      />
+                      ZaloPay
+                    </div>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  value="VnPay"
+                  control={
+                    <Radio
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "#F37022", // Đổi màu dấu tick thành F37022
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <div>
+                      <img
+                        src={vnpay}
+                        alt="VnPay"
+                        style={{ marginRight: "8px", width: "20px" }}
+                      />
+                      VnPay
+                    </div>
+                  }
+                />
+              </Grid>
+            </RadioGroup>
+          </Grid>
+          <Grid className="mb-4" item xs={12}>
             <Grid
               item
               xs={12}

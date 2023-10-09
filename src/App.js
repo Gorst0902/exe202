@@ -24,6 +24,15 @@ import UserList from "./pages/AdminPage/UserList";
 import OrderList from "./pages/AdminPage/OrderList";
 import TransactionList from "./pages/AdminPage/Transaction";
 import OrderDetail from "./pages/AdminPage/OrderDetail";
+import Dashboard from "./pages/AdminPage/Dashboard";
+import AutoComplete from "./pages/Booking/Autocomplete";
+import OrderSuccess from "./pages/RedirectPage/OrderSuccess";
+import ErrorPage from "./pages/RedirectPage/Error";
+import OrderFail from "./pages/RedirectPage/OrderFail";
+import SettingList from "./pages/SettingPage/SettingList";
+import UserInfo from "./pages/SettingPage/UserInfo";
+import VehicleInfo from "./pages/SettingPage/VehicleInfo";
+import UserTransaction from "./pages/SettingPage/UserTransaction";
 
 function App() {
   return (
@@ -49,11 +58,26 @@ function App() {
 
             {/* Admin Page */}
             <Route path="/admin/login" element={<AdminLoginForm />} />
-            <Route path="/admin/dashboard" element={<AdminListItem />} />
+            {/* <Route path="/admin/dashboard" element={<AdminListItem />} /> */}
             <Route path="/admin/userlist" element={<UserList />} />
             <Route path="/admin/orderlist" element={<OrderList />} />
             <Route path="/admin/orderdetail/:id" element={<OrderDetail />} />
             <Route path="/admin/transaction" element={<TransactionList />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+
+            {/* test Autocomplete */}
+            <Route path="/test" element={<AutoComplete />} />
+
+            {/* Redirect Page */}
+            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/orderfail" element={<OrderFail />} />
+            <Route path="/error" element={<ErrorPage />} />
+
+            {/* Setting List */}
+            <Route path="/settings" element={<SettingList />} />
+            <Route path="/userinfo" element={<UserInfo />} />
+            <Route path="/vehicleinfo" element={<VehicleInfo />} />
+            <Route path="/transaction" element={<UserTransaction />} />
           </Routes>
         </Router>
       </AuthProvider>

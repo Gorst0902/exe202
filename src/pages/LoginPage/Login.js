@@ -32,17 +32,22 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        // Save the user ID in localStorage
-        const userId = data.id; // Assuming the API response has an "id" field for the user ID
-
-        // Save the user ID in localStorage
+        const userId = data.id;
+        const roleUser = data.roleName;
         localStorage.setItem("userId", userId);
+        localStorage.setItem("roleUser", roleUser);
         login(data.token);
         navigate(`/${data.roleName.toLowerCase()}`);
       } else {
         if (response.status === 400) {
-          // Thay đổi thông báo lỗi bằng react-toastify
-          toast.error("Số điện thoại hoặc mật khẩu không chính xác");
+          // Thử lấy thông báo lỗi từ Response JSON (nếu có)
+          const errorResponse = await response.json();
+          if (errorResponse.errors && errorResponse.errors.length > 0) {
+            const errorMessage = errorResponse.errors[0];
+            toast.error(errorMessage);
+          } else {
+            toast.error("Số điện thoại hoặc mật khẩu không chính xác");
+          }
         } else {
           toast.error("Đã xảy ra lỗi khi đăng nhập");
         }

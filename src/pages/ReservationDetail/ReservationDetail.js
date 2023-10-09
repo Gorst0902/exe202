@@ -79,8 +79,9 @@ export default function ReservationDetail() {
           <div className="goods__content">
             {selectedItem.isNow == true ? (
               <p>
-              Thời gian bốc hàng: {formatDateTime(selectedItem.pickUpDateTime)}
-            </p>
+                Thời gian bốc hàng:{" "}
+                {formatDateTime(selectedItem.pickUpDateTime)}
+              </p>
             ) : (
               <p>Thời gian bốc hàng: Đang cần xe bây giờ</p>
             )}
@@ -94,7 +95,7 @@ export default function ReservationDetail() {
         </div>
       </div>
       <div className="detail__footer">
-        <button className="orderCar">ĐẶT HÀNG</button>
+        <button className="orderCar">NHẬN ĐƠN</button>
       </div>
     </div>
   );

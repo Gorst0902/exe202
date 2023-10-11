@@ -107,8 +107,8 @@ function LocationComponent() {
 
   useEffect(() => {
     if (latitude !== null && longitude !== null) {
-      const apiUrlNow = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${latitude}&Longitude=${longitude}&isNow=true`;
-      const apiUrlFuture = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${latitude}&Longitude=${longitude}&isNow=false`;
+      const apiUrlNow = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${latitude}&Longitude=${longitude}&LatitudeDes=0&LongitudeDes=0&isNow=true`;
+      const apiUrlFuture = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${latitude}&Longitude=${longitude}&LatitudeDes=0&LongitudeDes=0&isNow=false`;
 
       // Call getApiData for "now" data
       getApiDataNow(apiUrlNow).then((data) => {

@@ -33,6 +33,7 @@ import SettingList from "./pages/SettingPage/SettingList";
 import UserInfo from "./pages/SettingPage/UserInfo";
 import VehicleInfo from "./pages/SettingPage/VehicleInfo";
 import UserTransaction from "./pages/SettingPage/UserTransaction";
+import ReservationShipping from "./pages/ReservationShipping/ReservationShipping";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
             <Route
               path="/reservationDetail/:reservationId"
               element={<ReservationDetail />}
+            />
+            <Route
+              path="/reservationShipping"
+              element={<ReservationShipping />}
             />
             <Route path="/user" element={<UserPage />} />
             <Route path="/create" element={<AddressAutocomplete />} />

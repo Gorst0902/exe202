@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Reservation from "../Reservation/Reservation";
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import ReservationShipping from "../ReservationShipping/ReservationShipping";
 import "../ReservationDetail/ReservationDetail.css";
 
 export default function ReservationDetail() {
   const { reservationId } = useParams();
   const [selectedItem, setSelectedItem] = useState(null);
   const { token } = useAuth();
+  const { userId } = useAuth();
+
+  const [shippingResponse, setShippingResponse] = useState(null);
+
+  const navigate = useNavigate();
 
   function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
@@ -40,6 +47,42 @@ export default function ReservationDetail() {
 
     const data = await response.json();
     return data;
+  }
+
+  async function reservationAction(reservationId) {
+    const response = await fetch(
+      `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/DriverReservationAction?driverId=${userId}&reservationId=${reservationId}&action=0`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Include your authentication token here
+          "Content-Type": "application/json", // You can adjust content type as needed
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Error fetching reservation detail: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  }
+
+  async function handleReservationActionAndSetResponse(reservationId) {
+    
+    try {
+      const response = await reservationAction(reservationId);
+      // Handle the response as needed
+      console.log(response);
+      setShippingResponse(response);
+      navigate('/reservationShipping');
+      return response; // Return the response data
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+      throw error; // Rethrow the error so you can handle it in the component
+    }
   }
 
   useEffect(() => {
@@ -95,8 +138,14 @@ export default function ReservationDetail() {
         </div>
       </div>
       <div className="detail__footer">
-        <button className="orderCar">NHẬN ĐƠN</button>
+        <button
+          className="orderCar"
+          onClick={() => handleReservationActionAndSetResponse(selectedItem.id)}
+        >
+          NHẬN ĐƠN
+        </button>
       </div>
+      <ReservationShipping response={shippingResponse} />
     </div>
   );
 }

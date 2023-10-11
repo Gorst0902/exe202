@@ -33,8 +33,18 @@ import SettingList from "./pages/SettingPage/SettingList";
 import UserInfo from "./pages/SettingPage/UserInfo";
 import VehicleInfo from "./pages/SettingPage/VehicleInfo";
 import UserTransaction from "./pages/SettingPage/UserTransaction";
+import ServiceList from "./pages/UserPage/ServiceList";
 
 function App() {
+  if (localStorage.getItem("userId")) {
+    localStorage.removeItem("userId");
+  }
+  if (localStorage.getItem("roleName")) {
+    localStorage.removeItem("roleName");
+  }
+  if (localStorage.getItem("token")) {
+    localStorage.removeItem("token");
+  }
   return (
     <div>
       <AuthProvider>
@@ -55,6 +65,7 @@ function App() {
             <Route path="/book" element={<AddressForm />} />
             <Route path="/userhistory" element={<PageUserHistory />} />
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
+            <Route path="/service" element={<ServiceList />} />
 
             {/* Admin Page */}
             <Route path="/admin/login" element={<AdminLoginForm />} />

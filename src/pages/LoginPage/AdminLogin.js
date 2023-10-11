@@ -40,9 +40,10 @@ const AdminLoginForm = () => {
       if (response.status === 200) {
         const data = response.data;
         const userId = data.id; // Assuming the API response has an "id" field for the user ID
-
+        const roleName = data.roleName;
         // Save the user ID in localStorage
         localStorage.setItem("userId", userId);
+        localStorage.setItem("roleName", roleName);
         login(data.token);
         navigate("/admin/dashboard");
       } else {

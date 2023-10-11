@@ -5,11 +5,21 @@
   width: 100%;
 }
 
-.journey, .list__journey {
+.journey,
+.list__journey {
   width: 350px;
 }
 
-.start, .end {
+.start,
+.end {
   font-size: 17px;
   font-weight: bold;
+}
+
+.modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px; /* Điều này là một giá trị tối thiểu cho chiều rộng của Modal */
+  min-height: 320px; /* Điều này là một giá trị tối thiểu cho chiều cao của Modal */
 }

@@ -1,70 +1,73 @@
-import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
+import { Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
+import AdminListItem from "./ListItem";
 
 export default function Dashboard() {
-  // Dữ liệu cho biểu đồ đường
-  const lineChartData = [
-    { date: "2023-10-01", users: 100 },
-    { date: "2023-10-02", users: 150 },
-    { date: "2023-10-03", users: 200 },
-    { date: "2023-10-04", users: 120 },
-    // Thêm dữ liệu người dùng truy cập theo ngày khác ở đây
-  ];
+  const [data, setData] = useState(null);
 
-  // Dữ liệu cho biểu đồ tròn so sánh vai trò
-  const roleData = [
-    { name: "User", value: 300 },
-    { name: "Driver", value: 150 },
-  ];
+  useEffect(() => {
+    // Gọi API và cập nhật state khi dữ liệu được tải về
+    fetch(
+      "https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetCountPercentUser"
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        const total = result.userCount + result.driverCount;
+        const userPercent = parseFloat(
+          ((result.userCount / total) * 100).toFixed(2)
+        );
+        const driverPercent = parseFloat(
+          ((result.driverCount / total) * 100).toFixed(2)
+        );
 
-  // Dữ liệu cho biểu đồ cột thể hiện doanh thu từng ngày
-  const revenueData = [
-    { date: "2023-10-01", revenue: 500 },
-    { date: "2023-10-02", revenue: 800 },
-    { date: "2023-10-03", revenue: 600 },
-    { date: "2023-10-04", revenue: 700 },
-    // Thêm dữ liệu doanh thu từng ngày khác ở đây
-  ];
-
+        setData([
+          { name: "User", value: userPercent },
+          { name: "Driver", value: driverPercent },
+        ]);
+      });
+  }, []);
+  console.log(data);
+  const colors = ["#0074e4", "#f37022"];
   return (
-    <div>
-      <div>
-        {/* Biểu đồ đường */}
-        <LineChart width={800} height={400} data={lineChartData}>
-          <XAxis dataKey="date" />
-          <YAxis />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="users" stroke="#8884d8" />
-        </LineChart>
-      </div>
+    <Grid container sx={{ display: "flex" }}>
+      {/* Sidebar */}
+      <Grid
+        sx={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
+          border: "1px solid #F37022",
+        }}
+        item
+        xs={2}
+      >
+        <AdminListItem />
+      </Grid>
 
-      <div>
-        {/* Biểu đồ cột */}
-        <BarChart width={800} height={400} data={revenueData}>
-          <XAxis dataKey="date" />
-          <YAxis />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="revenue" fill="#8884d8" />
-        </BarChart>
-      </div>
-    </div>
+      {/* Main Content */}
+      <Grid item xs={10}>
+        {data && (
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                dataKey="value"
+                data={data}
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              >
+                {data.map((entry, index) => (
+                  <Cell key={index} fill={colors[index]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
+      </Grid>
+    </Grid>
   );
 }

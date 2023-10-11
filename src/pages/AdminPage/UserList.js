@@ -19,6 +19,9 @@ import {
 } from "@mui/material";
 import { Button, Modal, Backdrop, Fade } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -102,11 +105,14 @@ export default function UserList() {
             user.id === userId ? { ...user, isDelete: !user.isDelete } : user
           )
         );
+        toast.success("Cập nhật thành công!");
       } else {
         console.error("Failed to update user status");
+        toast.error("Cập nhật trạng thái thất bại!");
       }
     } catch (error) {
       console.error("Error updating user status:", error);
+      toast.error("Lỗi khi update!");
     }
   };
 
@@ -213,13 +219,16 @@ export default function UserList() {
       if (response.ok) {
         // Đóng Modal sau khi thêm xe thành công
         handleCloseAddVehicleModal();
+        toast.success("Đăng ký xe thành công!");
         // Cập nhật danh sách người dùng sau khi thêm xe
         fetchData();
       } else {
+        toast.error("Đăng ký xe thất bại!");
         console.error("Failed to add vehicle");
       }
     } catch (error) {
       console.error("Error adding vehicle:", error);
+      toast.error("Vui lòng thử lại!");
     }
   };
 
@@ -465,6 +474,7 @@ export default function UserList() {
           </div>
         </Box>
       </Modal>
+      <ToastContainer />
     </Grid>
   );
 }

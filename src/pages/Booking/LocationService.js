@@ -20,6 +20,7 @@ import {
   Grid,
   IconButton,
   MenuItem,
+  Modal,
   Select,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -27,6 +28,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation"; // Import icon
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import recImg from "../images/BPing.png";
 import delImg from "../images/APing.png";
+import price from "../images/price.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../context/AuthContext";
@@ -56,6 +58,15 @@ function AddressAutocomplete() {
   const [selectedServices, setSelectedServices] = useState([]);
   const [defaultServices, setDefaultServices] = useState([]);
   const { token } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const recIcon = L.icon({
     iconUrl: recImg, // Đường dẫn đến hình ảnh
@@ -583,7 +594,7 @@ function AddressAutocomplete() {
                       width: "100%",
                       "&.MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: "#F37022", // Đổi màu viền ở đây
+                          borderColor: "#F37022",
                         },
                       },
                     }}
@@ -597,6 +608,7 @@ function AddressAutocomplete() {
                   </Select>
                 </div>
               )}
+
               {services.length > 0 && (
                 <div>
                   <div style={{ marginBottom: "70px" }}>

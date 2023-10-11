@@ -28,7 +28,6 @@ import MyLocationIcon from "@mui/icons-material/MyLocation"; // Import icon
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import recImg from "../images/BPing.png";
 import delImg from "../images/APing.png";
-import price from "../images/price.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../context/AuthContext";

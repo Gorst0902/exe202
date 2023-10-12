@@ -59,4 +59,4 @@ jobs:
           app-name: 'tsddelivery'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DBB4C791F09E4591AFA2FAF94EFDB247 }}
-          package: .
+          package: release.zip

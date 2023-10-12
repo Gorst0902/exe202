@@ -16,6 +16,7 @@
 }
 
 .footer button {
+  list-style: none;
   height: 50px;
   width: 50px;
   border: none;

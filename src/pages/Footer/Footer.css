@@ -16,6 +16,7 @@
 }
 
 .footer button {
+  border-radius: 15px;
   list-style: none;
   height: 50px;
   width: 50px;
@@ -32,7 +33,7 @@
 .footer i {
   font-size: 30px;
   color: #050506;
-  text-decoration: none;
+  text-decoration: none; /* Loại bỏ gạch chân cho tất cả icon */
 }
 
 .footer .search {
@@ -41,4 +42,9 @@
   border-radius: 50%;
   color: white;
   box-shadow: 0px 4px 12px 0px;
+}
+
+/* Bỏ gạch xanh dưới các link trong footer */
+.footer a {
+  text-decoration: none;
 }

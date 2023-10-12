@@ -5,20 +5,20 @@ export default function Footer() {
   return (
     <div className="footer">
       <div className="footer__content">
-        <button className="fa fa-home">
-          <i className="fa fa-home" />
+        <button>
+          <i className="fa-solid fa-house" />
         </button>
-        <button className="fa fa-list">
-          <i className="fa fa-list" />
+        <button>
+          <i className="fa-solid fa-list" />
         </button>
-        <button className="fa fa-search search">
-          <i className="fa fa-search" />
+        <button className="search">
+          <i className="fa-solid fa-magnifying-glass" />
         </button>
-        <button className="fa fa-bell">
-          <i className="fa fa-bell" />
+        <button>
+          <i className="fa-solid fa-bell" />
         </button>
-        <button className="fa fa-gear">
-          <i className="fa fa-gear" />
+        <button>
+          <i className="fa-solid fa-gear" />
         </button>
       </div>
     </div>

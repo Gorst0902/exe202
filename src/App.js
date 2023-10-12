@@ -36,15 +36,15 @@ import UserTransaction from "./pages/SettingPage/UserTransaction";
 import ServiceList from "./pages/UserPage/ServiceList";
 
 function App() {
-  if (localStorage.getItem("userId")) {
-    localStorage.removeItem("userId");
-  }
-  if (localStorage.getItem("roleName")) {
-    localStorage.removeItem("roleName");
-  }
-  if (localStorage.getItem("token")) {
-    localStorage.removeItem("token");
-  }
+  // if (localStorage.getItem("userId")) {
+  //   localStorage.removeItem("userId");
+  // }
+  // if (localStorage.getItem("roleName")) {
+  //   localStorage.removeItem("roleName");
+  // }
+  // if (localStorage.getItem("token")) {
+  //   localStorage.removeItem("token");
+  // }
   return (
     <div>
       <AuthProvider>

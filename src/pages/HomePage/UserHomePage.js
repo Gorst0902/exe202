@@ -40,7 +40,7 @@ export default function UserPage() {
     <>
       <UserHeader />
 
-      <div className="userpage container">
+      <div className="mb-5 userpage container">
         <CardMedia
           className="mb-3 banner"
           component="img"

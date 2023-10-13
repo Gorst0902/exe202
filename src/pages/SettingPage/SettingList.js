@@ -70,8 +70,14 @@ export default function SettingList() {
       </List>
       {roleUser === "USER" && <UserFooter />}
       {roleUser === "DRIVER" && <Footer />}
-      <div style={{ display: "grid", placeItems: "center" }}>
-        {" "}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
         <Button
           onClick={handleLogout}
           className="mb-3"
@@ -81,8 +87,6 @@ export default function SettingList() {
             height: "50px",
             width: "80%",
             color: "white",
-            position: "absolute", // Đặt vị trí của button là tuyệt đối
-            bottom: "80px", // Đặt khoảng cách từ dưới lên (có thể điều chỉnh tùy ý)
           }}
         >
           Đăng xuất

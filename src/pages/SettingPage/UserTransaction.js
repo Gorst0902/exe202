@@ -17,12 +17,13 @@ import { useAuth } from "../../context/AuthContext";
 import { format } from "date-fns";
 import wallet from "../images/wallet.png";
 import axios from "axios";
+import Footer from "../Footer/Footer";
 
 export default function UserTransaction() {
   const [balance, setBalance] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const { token } = useAuth();
-
+  const roleUser = localStorage.getItem("roleUser");
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
@@ -140,7 +141,8 @@ export default function UserTransaction() {
           )}
         </Box>
       </Container>
-      <UserFooter />
+      {roleUser === "USER" && <UserFooter />}
+      {roleUser === "DRIVER" && <Footer />}
     </div>
   );
 }

@@ -11,11 +11,12 @@ import {
 import UserFooter from "../UserPage/UserFooter";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import Footer from "../Footer/Footer";
 
 export default function VehicleInfo() {
   const [vehicleData, setVehicleData] = useState(null);
   const { token } = useAuth();
-
+  const roleUser = localStorage.getItem("roleUser");
   useEffect(() => {
     // Lấy id từ localStorage
     const userId = localStorage.getItem("userId");
@@ -70,7 +71,8 @@ export default function VehicleInfo() {
           </Box>
         )}
       </Container>
-      <UserFooter />
+      {roleUser === "USER" && <UserFooter />}
+      {roleUser === "DRIVER" && <Footer />}
     </div>
   );
 }

@@ -4,10 +4,11 @@ import UserHeader from "../UserPage/UserHeader";
 import { Container, Typography, Avatar, Box } from "@mui/material";
 import { format } from "date-fns";
 import UserFooter from "../UserPage/UserFooter";
+import Footer from "../Footer/Footer";
 
 export default function UserInfo() {
   const [userData, setUserData] = useState(null);
-
+  const roleUser = localStorage.getItem("roleUser");
   useEffect(() => {
     // Lấy id từ localStorage
     const userId = localStorage.getItem("userId");
@@ -65,7 +66,8 @@ export default function UserInfo() {
           )}
         </Box>
       </Container>
-      <UserFooter />
+      {roleUser === "USER" && <UserFooter />}
+      {roleUser === "DRIVER" && <Footer />}
     </div>
   );
 }

@@ -44,6 +44,7 @@ export default function Login() {
           const errorResponse = await response.json();
           if (errorResponse.errors && errorResponse.errors.length > 0) {
             const errorMessage = errorResponse.errors[0];
+            console.log(errorMessage);
             toast.error(errorMessage);
           } else {
             toast.error("Số điện thoại hoặc mật khẩu không chính xác");

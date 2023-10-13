@@ -37,3 +37,6 @@
     color: #f37022 !important;
   }
 }
+.homepage__login a {
+  text-decoration: none;
+}

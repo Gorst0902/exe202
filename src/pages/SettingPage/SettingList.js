@@ -33,49 +33,50 @@ export default function SettingList() {
     navigate("/login"); // Chuyển hướng sau khi logout
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "70vh" }}>
-      <UserHeader />
-      <List>
-        <ListItem button component={Link} to="/userinfo">
-          <ListItemIcon>
-            <Person />
-          </ListItemIcon>
-          <ListItemText primary="Thông tin cá nhân" />
-        </ListItem>
-
-        {roleUser === "USER" && (
-          <ListItem button component={Link} to="/info">
+    <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div style={{ flex: 1 }}>
+        {" "}
+        <UserHeader />
+        <List>
+          <ListItem button component={Link} to="/userinfo">
             <ListItemIcon>
-              <Description />
+              <Person />
             </ListItemIcon>
-            <ListItemText primary="Thông tin doanh nghiệp" />
+            <ListItemText primary="Thông tin cá nhân" />
           </ListItem>
-        )}
 
-        {roleUser === "DRIVER" && (
-          <ListItem button component={Link} to="/vehicleinfo">
+          {roleUser === "USER" && (
+            <ListItem button component={Link} to="/info">
+              <ListItemIcon>
+                <Description />
+              </ListItemIcon>
+              <ListItemText primary="Thông tin doanh nghiệp" />
+            </ListItem>
+          )}
+
+          {roleUser === "DRIVER" && (
+            <ListItem button component={Link} to="/vehicleinfo">
+              <ListItemIcon>
+                <DirectionsCar />
+              </ListItemIcon>
+              <ListItemText primary="Thông tin xe" />
+            </ListItem>
+          )}
+
+          <ListItem button component={Link} to="/transaction">
             <ListItemIcon>
-              <DirectionsCar />
+              <AccountBalanceWallet />
             </ListItemIcon>
-            <ListItemText primary="Thông tin xe" />
+            <ListItemText primary="Lịch sử giao dịch" />
           </ListItem>
-        )}
+        </List>
+      </div>
+      <div className="footer">
+        {roleUser === "USER" && <UserFooter />}
+        {roleUser === "DRIVER" && <Footer />}
+      </div>
 
-        <ListItem button component={Link} to="/transaction">
-          <ListItemIcon>
-            <AccountBalanceWallet />
-          </ListItemIcon>
-          <ListItemText primary="Lịch sử giao dịch" />
-        </ListItem>
-      </List>
-      {roleUser === "USER" && <UserFooter />}
-      {roleUser === "DRIVER" && <Footer />}
-      <div
-        style={{
-          marginTop: "auto",
-          textAlign: "center",
-        }}
-      >
+      <div style={{ textAlign: "center" }}>
         <Button
           onClick={handleLogout}
           className="mb-3"
@@ -85,6 +86,7 @@ export default function SettingList() {
             height: "50px",
             width: "80%",
             color: "white",
+            margin: "20px auto", // Thêm margin để căn chỉnh nút đăng xuất
           }}
         >
           Đăng xuất

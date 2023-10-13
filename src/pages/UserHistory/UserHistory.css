@@ -26,3 +26,9 @@
     height: 150px;
   }
 }
+
+.divider {
+  border-top: 1px solid #000; /* Đường gạch ngang màu đen */
+  width: 20px; /* Độ rộng của đường gạch ngang */
+  margin: 0 10px; /* Khoảng cách từ mỗi phía của đường gạch ngang */
+}

@@ -583,7 +583,7 @@ function AddressAutocomplete() {
           ) : (
             <div>
               {showVehicleSelectBox && (
-                <div className="mb-3">
+                <div className="mb-4">
                   <h4>Thông tin xe</h4>
                   <Select
                     onChange={handleVehicleChange}
@@ -610,7 +610,7 @@ function AddressAutocomplete() {
 
               {services.length > 0 && (
                 <div>
-                  <div style={{ marginBottom: "70px" }}>
+                  <div style={{ marginBottom: "90px" }}>
                     <h5>Dịch vụ</h5>
                     {services
                       .filter((service) => service.isShow)

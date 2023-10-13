@@ -33,45 +33,50 @@ export default function SettingList() {
     navigate("/login"); // Chuyển hướng sau khi logout
   };
   return (
-    <div>
-      <UserHeader />
-      <List>
-        <ListItem button component={Link} to="/userinfo">
-          <ListItemIcon>
-            <Person />
-          </ListItemIcon>
-          <ListItemText primary="Thông tin cá nhân" />
-        </ListItem>
-
-        {roleUser === "USER" && (
-          <ListItem button component={Link} to="/info">
-            <ListItemIcon>
-              <Description />
-            </ListItemIcon>
-            <ListItemText primary="Thông tin doanh nghiệp" />
-          </ListItem>
-        )}
-
-        {roleUser === "DRIVER" && (
-          <ListItem button component={Link} to="/vehicleinfo">
-            <ListItemIcon>
-              <DirectionsCar />
-            </ListItemIcon>
-            <ListItemText primary="Thông tin xe" />
-          </ListItem>
-        )}
-
-        <ListItem button component={Link} to="/transaction">
-          <ListItemIcon>
-            <AccountBalanceWallet />
-          </ListItemIcon>
-          <ListItemText primary="Lịch sử giao dịch" />
-        </ListItem>
-      </List>
-      {roleUser === "USER" && <UserFooter />}
-      {roleUser === "DRIVER" && <Footer />}
-      <div style={{ display: "grid", placeItems: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div style={{ flex: 1 }}>
         {" "}
+        <UserHeader />
+        <List>
+          <ListItem button component={Link} to="/userinfo">
+            <ListItemIcon>
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary="Thông tin cá nhân" />
+          </ListItem>
+
+          {roleUser === "USER" && (
+            <ListItem button component={Link} to="/info">
+              <ListItemIcon>
+                <Description />
+              </ListItemIcon>
+              <ListItemText primary="Thông tin doanh nghiệp" />
+            </ListItem>
+          )}
+
+          {roleUser === "DRIVER" && (
+            <ListItem button component={Link} to="/vehicleinfo">
+              <ListItemIcon>
+                <DirectionsCar />
+              </ListItemIcon>
+              <ListItemText primary="Thông tin xe" />
+            </ListItem>
+          )}
+
+          <ListItem button component={Link} to="/transaction">
+            <ListItemIcon>
+              <AccountBalanceWallet />
+            </ListItemIcon>
+            <ListItemText primary="Lịch sử giao dịch" />
+          </ListItem>
+        </List>
+      </div>
+      <div className="footer">
+        {roleUser === "USER" && <UserFooter />}
+        {roleUser === "DRIVER" && <Footer />}
+      </div>
+
+      <div style={{ textAlign: "center" }}>
         <Button
           onClick={handleLogout}
           className="mb-3"
@@ -81,8 +86,7 @@ export default function SettingList() {
             height: "50px",
             width: "80%",
             color: "white",
-            position: "absolute", // Đặt vị trí của button là tuyệt đối
-            bottom: "80px", // Đặt khoảng cách từ dưới lên (có thể điều chỉnh tùy ý)
+            margin: "20px auto", // Thêm margin để căn chỉnh nút đăng xuất
           }}
         >
           Đăng xuất

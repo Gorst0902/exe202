@@ -22,7 +22,7 @@ export default function HomePage() {
         <div>
           <img src={myImage} alt="" className="homepage__header__logo" />
         </div>
-        <div>
+        <div className="homepage__login">
           <Link to="/login">
             <Button className="homepage__header_button" variant="outlined">
               Đăng nhập

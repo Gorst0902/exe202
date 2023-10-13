@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - tsddelivery
+name: Build and deploy Node.js app to Azure Web App - tsd-client
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
         with:
           filename: release.zip
           path: ./build/*
-      
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -53,10 +53,10 @@ jobs:
           name: node-app
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tsddelivery'
+          app-name: 'tsd-client'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DBB4C791F09E4591AFA2FAF94EFDB247 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E356E2609FF64C129DF9C649A0DF6B4B }}
           package: release.zip

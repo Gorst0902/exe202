@@ -12,6 +12,7 @@ import "../Footer/Footer.css";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CurrentBooking from './../CurrentBooking/CurrentBooking';
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const [open, setOpen] = React.useState(false);
@@ -174,21 +175,34 @@ export default function Footer() {
   return (
     <div className="footer">
       <div className="footer__content">
-        <button>
-          <i className="fa-solid fa-house" />
-        </button>
-        <button>
-          <i className="fa-solid fa-list" />
-        </button>
-        <button className="search" onClick={handleOpen}>
-          <i className="fa-solid fa-magnifying-glass" />
-        </button>
-        <button>
-          <i className="fa-solid fa-bell" onClick={getCurrentBooking}/>
-        </button>
-        <button>
-          <i className="fa-solid fa-gear" />
-        </button>
+        <Link to="/driver">
+          <button>
+            <i className="fa-solid fa-house" />
+          </button>
+        </Link>
+        <Link to="/lichsu">
+          <button>
+            <i className="fa-solid fa-list" />
+          </button>
+        </Link>
+        {/* tìm kiếm */}
+        <Link to="/timkiem">
+          <button className="search" onClick={handleOpen}>
+            <i className="fa-solid fa-magnifying-glass" />
+          </button>
+        </Link>
+        {/* đơn hàng đang nhận */}
+        <Link to="/currentBooking">
+          <button>
+            <i className="fa-solid fa-bell" />
+          </button>
+        </Link>
+        <Link to="/settings">
+          <button>
+            <i className="fa-solid fa-gear" />
+          </button>
+        </Link>
+
       </div>
 
       <Modal

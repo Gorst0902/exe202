@@ -28,6 +28,10 @@ function AddressForm(props) {
   const [pickUpDateTime, setPickUpDateTime] = useState(null); // Thời gian đặt hàng lịch hẹn
   const [paymentMethod, setPaymentMethod] = useState("Momo"); // Mặc định là Momo
 
+  const protocol = window.location.protocol;
+  const host = window.location.host;
+  const clientHost = `${protocol}//${host}`;
+
   const [goodsDto, setGoodsDto] = useState({
     name: "",
     weight: 0,
@@ -127,6 +131,7 @@ function AddressForm(props) {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-Client-Host": clientHost,
           },
         }
       )
@@ -135,7 +140,7 @@ function AddressForm(props) {
         console.log(response.data);
         // Chuyển hướng hoặc thực hiện các hành động cần thiết sau khi đặt hàng thành công
 
-        // Sau khi đặt hàng thành công, kiểm tra loại thiết bị
+        // Sau khi đặt hàng thành công, kiểm tra loại thiết DDbị
         const { deeplink, paymentUrl } = response.data;
 
         // Sau khi lấy dữ liệu, kiểm tra loại thiết bị

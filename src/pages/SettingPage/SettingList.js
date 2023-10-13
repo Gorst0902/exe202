@@ -33,7 +33,7 @@ export default function SettingList() {
     navigate("/login"); // Chuyển hướng sau khi logout
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "80vh" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "70vh" }}>
       <UserHeader />
       <List>
         <ListItem button component={Link} to="/userinfo">

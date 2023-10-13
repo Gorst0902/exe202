@@ -33,7 +33,7 @@ export default function SettingList() {
     navigate("/login"); // Chuyển hướng sau khi logout
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "80vh" }}>
       <UserHeader />
       <List>
         <ListItem button component={Link} to="/userinfo">
@@ -71,7 +71,10 @@ export default function SettingList() {
       {roleUser === "USER" && <UserFooter />}
       {roleUser === "DRIVER" && <Footer />}
       <div
-        style={{ marginTop: "auto", textAlign: "center", marginBottom: "90px" }}
+        style={{
+          marginTop: "auto",
+          textAlign: "center",
+        }}
       >
         <Button
           onClick={handleLogout}

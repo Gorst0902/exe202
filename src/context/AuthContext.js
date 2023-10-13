@@ -8,15 +8,16 @@ export function AuthProvider({ children }) {
 
   const login = (newToken, newUserId) => {
     setToken(newToken);
-    setUserId(newUserId)
+    // setUserId(newUserId);
     localStorage.setItem("token", newToken);
-    localStorage.setItem("userId", newUserId);
+    // localStorage.setItem("userId", newUserId);
   };
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    localStorage.removeItem("roleName");
   };
 
   return (

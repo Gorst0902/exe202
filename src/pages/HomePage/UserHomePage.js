@@ -16,6 +16,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import { Link } from "react-router-dom";
 
 export default function UserPage() {
   const [currentBanner, setCurrentBanner] = useState(banner);
@@ -48,19 +50,22 @@ export default function UserPage() {
         />
         <Grid container spacing={3} className="mb-5">
           <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Box display="flex" justifyContent="center" alignItems="center">
-                  <NotificationsIcon
-                    sx={{ color: "#F37022" }}
-                    fontSize="large"
-                  />
-                </Box>
-                <Typography variant="subtitle1" align="center">
-                  Thông báo
-                </Typography>
-              </CardContent>
-            </Card>
+            <Link to="/service" style={{ textDecoration: "none" }}>
+              <Card>
+                <CardContent>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <SummarizeIcon sx={{ color: "#F37022" }} fontSize="large" />
+                  </Box>
+                  <Typography variant="subtitle1" align="center">
+                    Bảng giá
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
           </Grid>
           <Grid item xs={6} sm={3}>
             <Card>

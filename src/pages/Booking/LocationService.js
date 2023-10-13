@@ -20,6 +20,7 @@ import {
   Grid,
   IconButton,
   MenuItem,
+  Modal,
   Select,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -56,6 +57,15 @@ function AddressAutocomplete() {
   const [selectedServices, setSelectedServices] = useState([]);
   const [defaultServices, setDefaultServices] = useState([]);
   const { token } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const recIcon = L.icon({
     iconUrl: recImg, // Đường dẫn đến hình ảnh
@@ -583,7 +593,7 @@ function AddressAutocomplete() {
                       width: "100%",
                       "&.MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: "#F37022", // Đổi màu viền ở đây
+                          borderColor: "#F37022",
                         },
                       },
                     }}
@@ -597,6 +607,7 @@ function AddressAutocomplete() {
                   </Select>
                 </div>
               )}
+
               {services.length > 0 && (
                 <div>
                   <div style={{ marginBottom: "70px" }}>

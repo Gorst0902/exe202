@@ -5,6 +5,7 @@ import Reservation from "../Reservation/Reservation";
 import { Link, useNavigate } from "react-router-dom";
 import ReservationDetail from "../ReservationDetail/ReservationDetail";
 import Autocomplete from "@mui/material/Autocomplete";
+import "../Reservation/Reservation.css";
 
 function LocationComponent() {
   const [latitude, setLatitude] = useState(null);
@@ -143,18 +144,18 @@ function LocationComponent() {
             <p>Error: {error.message}</p>
           ) : (
             <>
-              <div className="tab-buttons">
-                <button onClick={() => setTabToShow("now")}>Now</button>
-                <button onClick={() => setTabToShow("future")}>Future</button>
+              <div className="tab-buttons d-flex justify-content-around">
+                <button onClick={() => setTabToShow("now")} className={tabToShow === "now" ? "active-tab" : ""}>Now</button>
+                <button onClick={() => setTabToShow("future")} className={tabToShow === "future" ? "active-tab" : ""}>Future</button>
               </div>
               <div className="journey-list">
                 {tabToShow === "now" &&
                   data1 &&
                   data1.map((item, index) => (
-                    <div key={index} onClick={() => handleItemClick(index)}>
+                    <div key={index} onClick={() => handleItemClick(index)} className="journey-list-item">
                       {item.highPriorityLevel == true ? (
                         <p className="priority">
-                          <i class="fa-solid fa-circle-check"></i>
+                          <i class="fa-solid fa-circle-check text-center"></i>
                         </p>
                       ) : (
                         <p></p>

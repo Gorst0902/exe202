@@ -9,6 +9,9 @@ import LocationComponent from "../LocationComponent/LocationComponent";
 import { useAuth } from "../../context/AuthContext";
 import "bootstrap/dist/css/bootstrap.css";
 import "../Footer/Footer.css";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import CurrentBooking from './../CurrentBooking/CurrentBooking';
 
 export default function Footer() {
   const [open, setOpen] = React.useState(false);
@@ -28,6 +31,8 @@ export default function Footer() {
   const [data1, setData1] = useState(null);
   const [data2, setData2] = useState(null);
   const [allData, setAllData] = useState({ now: null, future: null });
+
+  const navigate = useNavigate();
 
   const handlePickupChange = (event, newValue) => {
     setPickupAddress(newValue);
@@ -150,6 +155,10 @@ export default function Footer() {
     }
   };
 
+  async function getCurrentBooking() {
+    navigate("/currentBooking");
+  }
+
   const style = {
     position: "absolute",
     top: "20%",
@@ -175,7 +184,7 @@ export default function Footer() {
           <i className="fa-solid fa-magnifying-glass" />
         </button>
         <button>
-          <i className="fa-solid fa-bell" />
+          <i className="fa-solid fa-bell" onClick={getCurrentBooking}/>
         </button>
         <button>
           <i className="fa-solid fa-gear" />

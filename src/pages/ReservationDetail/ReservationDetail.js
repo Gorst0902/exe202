@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Reservation from "../Reservation/Reservation";
 import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ReservationShipping from "../ReservationShipping/ReservationShipping";
 import "../ReservationDetail/ReservationDetail.css";
+import CurrentBooking from './../CurrentBooking/CurrentBooking';
 
 export default function ReservationDetail() {
   const { reservationId } = useParams();
   const [selectedItem, setSelectedItem] = useState(null);
   const { token } = useAuth();
-  const { userId } = useAuth();
+  const { userId } = localStorage.getItem("userId");
 
   const [shippingResponse, setShippingResponse] = useState(null);
+
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -50,6 +53,8 @@ export default function ReservationDetail() {
   }
 
   async function reservationAction(reservationId) {
+    const userId = localStorage.getItem("userId");
+    console.log("userId: ", userId);
     const response = await fetch(
       `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/DriverReservationAction?driverId=${userId}&reservationId=${reservationId}&action=0`,
       {
@@ -65,23 +70,25 @@ export default function ReservationDetail() {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   }
 
   async function handleReservationActionAndSetResponse(reservationId) {
-    
     try {
       const response = await reservationAction(reservationId);
       // Handle the response as needed
       console.log(response);
-      setShippingResponse(response);
-      navigate('/reservationShipping');
+      navigate("/currentBooking");
       return response; // Return the response data
     } catch (error) {
-      // Handle errors
-      console.error(error);
-      throw error; // Rethrow the error so you can handle it in the component
+      if (error.message === "Failed to fetch") {
+        setError("Network error. Please check your internet connection.");
+      } else if (error.message === "Another specific error message") {
+        setError("An error occurred due to a specific reason. Please try again later.");
+      } else {
+        setError("An unknown error occurred. Please contact support for assistance.");
+      }
+      throw error;
     }
   }
 
@@ -99,7 +106,7 @@ export default function ReservationDetail() {
 
   if (!selectedItem) {
     // Handle the case when selectedItem is null or undefined
-    return <p>No item selected</p>;
+    return <p className="text-center">Loading</p>;
   }
 
   return (
@@ -137,6 +144,11 @@ export default function ReservationDetail() {
           </div>
         </div>
       </div>
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
       <div className="detail__footer">
         <button
           className="orderCar"
@@ -145,7 +157,6 @@ export default function ReservationDetail() {
           NHẬN ĐƠN
         </button>
       </div>
-      <ReservationShipping response={shippingResponse} />
     </div>
   );
 }

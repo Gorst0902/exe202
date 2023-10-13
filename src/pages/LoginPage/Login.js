@@ -33,6 +33,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         const userId = data.id;
+        console.log('userId: ', userId);
         const roleUser = data.roleName;
         localStorage.setItem("userId", userId);
         localStorage.setItem("roleUser", roleUser);

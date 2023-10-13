@@ -33,7 +33,9 @@ import SettingList from "./pages/SettingPage/SettingList";
 import UserInfo from "./pages/SettingPage/UserInfo";
 import VehicleInfo from "./pages/SettingPage/VehicleInfo";
 import UserTransaction from "./pages/SettingPage/UserTransaction";
+import ReservationShipping from "./pages/ReservationShipping/ReservationShipping";
 import ServiceList from "./pages/UserPage/ServiceList";
+import CurrentBooking from "./pages/CurrentBooking/CurrentBooking";
 
 function App() {
   // if (localStorage.getItem("userId")) {
@@ -60,6 +62,11 @@ function App() {
               path="/reservationDetail/:reservationId"
               element={<ReservationDetail />}
             />
+            <Route
+              path="/reservationShipping"
+              element={<ReservationShipping />}
+            />
+            <Route path="currentBooking" element={<CurrentBooking />} />
             <Route path="/user" element={<UserPage />} />
             <Route path="/create" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />

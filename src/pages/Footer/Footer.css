@@ -6,7 +6,7 @@
   position: fixed;
   background-color: white;
   bottom: 0;
-  z-index: 999;
+  z-index: 99;
 }
 
 .footer__content {
@@ -44,6 +44,9 @@
   box-shadow: 0px 4px 12px 0px;
 }
 
+.modal__input {
+  width: 300px;
+}
 /* Bỏ gạch xanh dưới các link trong footer */
 .footer a {
   text-decoration: none;

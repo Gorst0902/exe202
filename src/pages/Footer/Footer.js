@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../Footer/Footer.css";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import CurrentBooking from './../CurrentBooking/CurrentBooking';
+import CurrentBooking from "./../CurrentBooking/CurrentBooking";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -137,7 +137,7 @@ export default function Footer() {
       const { lat, lng } = pickupCoordinates;
       const apiUrlNow = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${lat}&Longitude=${lng}&isNow=true`;
       const apiUrlFuture = `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/GetAwaitingDriverReservation?Latitude=${lat}&Longitude=${lng}&isNow=false`;
-  
+
       // Call getApiData for "now" data
       getApiDataNow(apiUrlNow).then((data) => {
         setAllData((prevState) => ({
@@ -145,7 +145,7 @@ export default function Footer() {
           now: data,
         }));
       });
-  
+
       // Call getApiData for "future" data
       getApiDataFuture(apiUrlFuture).then((data) => {
         setAllData((prevState) => ({
@@ -186,11 +186,11 @@ export default function Footer() {
           </button>
         </Link>
         {/* tìm kiếm */}
-        <Link to="/timkiem">
-          <button className="search" onClick={handleOpen}>
-            <i className="fa-solid fa-magnifying-glass" />
-          </button>
-        </Link>
+
+        <button className="search" onClick={handleOpen}>
+          <i className="fa-solid fa-magnifying-glass" />
+        </button>
+
         {/* đơn hàng đang nhận */}
         <Link to="/currentBooking">
           <button>
@@ -202,7 +202,6 @@ export default function Footer() {
             <i className="fa-solid fa-gear" />
           </button>
         </Link>
-
       </div>
 
       <Modal

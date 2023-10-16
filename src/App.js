@@ -36,6 +36,9 @@ import UserTransaction from "./pages/SettingPage/UserTransaction";
 import ReservationShipping from "./pages/ReservationShipping/ReservationShipping";
 import ServiceList from "./pages/UserPage/ServiceList";
 import CurrentBooking from "./pages/CurrentBooking/CurrentBooking";
+import UserReservation from "./pages/UserHistory/UserReservation";
+import ForgetPassword from "./pages/ResetPassword/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   // if (localStorage.getItem("userId")) {
@@ -73,6 +76,7 @@ function App() {
             <Route path="/userhistory" element={<PageUserHistory />} />
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
             <Route path="/service" element={<ServiceList />} />
+            <Route path="/userreservation" element={<UserReservation />} />
 
             {/* Admin Page */}
             <Route path="/admin/login" element={<AdminLoginForm />} />
@@ -96,6 +100,9 @@ function App() {
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/vehicleinfo" element={<VehicleInfo />} />
             <Route path="/transaction" element={<UserTransaction />} />
+
+            <Route path="/forget-password" element={<ForgetPassword />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
           </Routes>
         </Router>
       </AuthProvider>

@@ -21,9 +21,9 @@ export default function UserFooter() {
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
         </Link>
-        <Link to="/notifications">
+        <Link to="/userreservation">
           <button>
-            <i className="fa-solid fa-bell" />
+            <i class="fa-solid fa-location-arrow"></i>
           </button>
         </Link>
         <Link to="/settings">

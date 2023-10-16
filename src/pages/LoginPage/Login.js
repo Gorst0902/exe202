@@ -33,7 +33,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         const userId = data.id;
-        console.log('userId: ', userId);
+        console.log("userId: ", userId);
         const roleUser = data.roleName;
         localStorage.setItem("userId", userId);
         localStorage.setItem("roleUser", roleUser);
@@ -95,9 +95,9 @@ export default function Login() {
         </select>
       </div>
       <div className="forgotPass">
-        <a href="" className="forgotPassLink">
+        <Link to="/forget-password" className="forgotPassLink">
           Quên mật khẩu?
-        </a>
+        </Link>
       </div>
       <div>
         <button className="login" onClick={handleLogin}>

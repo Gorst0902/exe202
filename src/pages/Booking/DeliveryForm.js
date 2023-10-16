@@ -28,6 +28,8 @@ function AddressForm(props) {
   const [pickUpDateTime, setPickUpDateTime] = useState(null); // Thời gian đặt hàng lịch hẹn
   const [paymentMethod, setPaymentMethod] = useState("Momo"); // Mặc định là Momo
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Tạo trạng thái cho nút
+
   const protocol = window.location.protocol;
   const host = window.location.host;
   const clientHost = `${protocol}//${host}`;
@@ -97,6 +99,11 @@ function AddressForm(props) {
   };
 
   const handlePlaceOrder = () => {
+    if (isButtonDisabled) {
+      return; // Nếu nút đã bị tắt, không thực hiện gì cả
+    }
+
+    setIsButtonDisabled(true);
     console.log(allservice); // Now you can access allservice here
     // Tạo payload cho API CreateReservation
     const createReservationPayload = {
@@ -154,13 +161,14 @@ function AddressForm(props) {
         } else {
           window.location.href = paymentUrl;
         }
-
+        setIsButtonDisabled(false);
         // navigate("/ordersuccess"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
       })
       .catch((error) => {
         // Xử lý lỗi từ API ở đây
         console.error(error);
         toast.error("Vui lòng thử lại!");
+        setIsButtonDisabled(false);
         // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết sau khi đặt hàng thất bại
       });
   };
@@ -554,6 +562,7 @@ function AddressForm(props) {
                 color: "white", // Set text color to white for better visibility
               }}
               onClick={handlePlaceOrder}
+              disabled={isButtonDisabled}
             >
               Xác nhận đặt hàng
             </Button>

@@ -33,7 +33,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         const userId = data.id;
-        console.log('userId: ', userId);
+        console.log("userId: ", userId);
         const roleUser = data.roleName;
         localStorage.setItem("userId", userId);
         localStorage.setItem("roleUser", roleUser);
@@ -45,6 +45,7 @@ export default function Login() {
           const errorResponse = await response.json();
           if (errorResponse.errors && errorResponse.errors.length > 0) {
             const errorMessage = errorResponse.errors[0];
+            console.log(errorMessage);
             toast.error(errorMessage);
           } else {
             toast.error("Số điện thoại hoặc mật khẩu không chính xác");
@@ -94,9 +95,9 @@ export default function Login() {
         </select>
       </div>
       <div className="forgotPass">
-        <a href="" className="forgotPassLink">
+        <Link to="/forget-password" className="forgotPassLink">
           Quên mật khẩu?
-        </a>
+        </Link>
       </div>
       <div>
         <button className="login" onClick={handleLogin}>

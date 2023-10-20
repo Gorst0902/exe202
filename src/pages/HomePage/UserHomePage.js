@@ -10,8 +10,9 @@ import {
 import "../HomePage/HomePage.css";
 import UserHeader from "../UserPage/UserHeader";
 import UserFooter from "../UserPage/UserFooter";
-import banner from "../images/banner.png";
-import bannerr from "../images/bannerr.png";
+import banner from "../images/slide.png";
+import banner2 from "../images/slide2.png";
+import banner3 from "../images/slide3.png";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
@@ -21,7 +22,7 @@ import { Link } from "react-router-dom";
 
 export default function UserPage() {
   const [currentBanner, setCurrentBanner] = useState(banner);
-  const banners = [banner, bannerr];
+  const banners = [banner, banner2, banner3];
   const bannerInterval = 5000;
 
   const changeBanner = () => {

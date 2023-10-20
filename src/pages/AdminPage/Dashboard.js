@@ -1,7 +1,6 @@
 import {
   Grid,
   TextField,
-  Button,
   Container,
   Paper,
   Typography,
@@ -28,6 +27,7 @@ import AdminListItem from "./ListItem";
 import { format, startOfMonth } from "date-fns";
 import { BeatLoader, PulseLoader } from "react-spinners";
 import { css } from "@emotion/react";
+import moment from "moment/moment";
 
 const override = css`
   margin-top: 20px;
@@ -40,6 +40,7 @@ export default function Dashboard() {
   const currentDate = new Date();
   const defaultStartDate = startOfMonth(currentDate); // Ngày đầu tháng
   const defaultEndDate = currentDate; // Ngày hiện tại
+  const [vehicleData, setVehicleData] = useState(null);
 
   const [dateRange, setDateRange] = useState({
     startDate: format(defaultStartDate, "yyyy-MM-dd"),
@@ -53,6 +54,34 @@ export default function Dashboard() {
 
   const [loginData, setLoginData] = useState(null);
   const [revenueData, setRevenueData] = useState(null); // New state variable for revenue data
+
+  const [chartType, setChartType] = useState("day");
+  const handleChartTypeChange = (type) => {
+    setChartType(type);
+  };
+  const weeklyRevenueData = {}; // Tổng doanh thu theo tuần
+  const monthlyRevenueData = {}; // Tổng doanh thu theo tháng
+
+  // Tính toán doanh thu hàng tuần và hàng tháng
+  if (revenueData) {
+    revenueData.forEach((entry) => {
+      const date = entry.date;
+      const weekOfYear = moment(date, "DD/MM/YYYY").isoWeek(); // Sử dụng moment.js để tính tuần
+      const month = moment(date, "DD/MM/YYYY").format("MM/YYYY");
+
+      // Tổng doanh thu hàng tuần
+      if (!weeklyRevenueData[weekOfYear]) {
+        weeklyRevenueData[weekOfYear] = 0;
+      }
+      weeklyRevenueData[weekOfYear] += entry.revenue;
+
+      // Tổng doanh thu hàng tháng
+      if (!monthlyRevenueData[month]) {
+        monthlyRevenueData[month] = 0;
+      }
+      monthlyRevenueData[month] += entry.revenue;
+    });
+  }
 
   useEffect(() => {
     // Gọi API và cập nhật state khi dữ liệu được tải về
@@ -99,6 +128,18 @@ export default function Dashboard() {
         console.error("Error fetching login data:", error);
       });
 
+    // Gọi API để lấy dữ liệu tài xế theo từng loại xe
+    fetch(
+      "https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetVehicleByVehicleType"
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setVehicleData(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching vehicle data:", error);
+      });
+
     // Gọi API để lấy dữ liệu doanh thu
     fetch(
       `https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetRevenueDataByTime?from=${dateRange.startDate}&to=${dateRange.endDate}`
@@ -136,6 +177,14 @@ export default function Dashboard() {
   console.log(revenueData);
 
   const colors = ["#0074e4", "#f37022"];
+  const customColors = [
+    "#f37022",
+    "#0074e4",
+    "#e28743",
+    "#abdbe3",
+    "#dd1831",
+    "#4db290 ",
+  ];
 
   const handleDateChange = (event) => {
     const { name, value } = event.target;
@@ -164,8 +213,144 @@ export default function Dashboard() {
       <Grid item xs={10} className="mb-5 mt-4">
         <Container>
           <h4 className="mb-4">Dashboard</h4>
+          <Grid className="mb-4" container spacing={2}>
+            <Grid item xs={6}>
+              {" "}
+              <Paper elevation={3}>
+                <Typography
+                  style={{ paddingTop: "30px" }}
+                  variant="h5"
+                  align="center"
+                  color="textSecondary"
+                  className="fw-bold"
+                >
+                  Phân bổ vai trò
+                </Typography>
+
+                {data && (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                      <Pie dataKey="value" data={data} outerRadius={80} label>
+                        {data.map((entry, index) => (
+                          <Cell key={index} fill={colors[index]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="row"
+                >
+                  {data &&
+                    data.map((entry, index) => (
+                      <Box
+                        className="mx-2"
+                        marginBottom={"70px"}
+                        key={index}
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                      >
+                        <div
+                          style={{
+                            backgroundColor: colors[index],
+                            width: 20,
+                            height: 20,
+                            marginRight: 5,
+                          }}
+                        ></div>
+                        <Typography variant="body2">{entry.name}</Typography>
+                      </Box>
+                    ))}
+                </Box>
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              {" "}
+              {vehicleData ? (
+                <Paper elevation={3}>
+                  <Typography
+                    style={{ paddingTop: "20px" }}
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    className="fw-bold"
+                  >
+                    Số lượng xe
+                  </Typography>
+                  <ResponsiveContainer width="100%" height={280}>
+                    <PieChart>
+                      <Pie
+                        data={vehicleData}
+                        dataKey="quantity"
+                        nameKey="vehicleType"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        label
+                      >
+                        {vehicleData.map((entry, index) => (
+                          <Cell
+                            key={index}
+                            fill={customColors[index % customColors.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    flexDirection="row"
+                    flexWrap="wrap"
+                  >
+                    {vehicleData &&
+                      vehicleData.map((entry, index) => (
+                        <Box
+                          className="mx-2"
+                          marginBottom={"20px"}
+                          key={index}
+                          display="flex"
+                          alignItems="center"
+                          flexDirection="row"
+                          width="33.33%" // Sử dụng 33.33% để chia thành 3 cột
+                        >
+                          <div
+                            style={{
+                              backgroundColor: customColors[index],
+                              width: 20,
+                              height: 20,
+                              marginRight: 5,
+                            }}
+                          ></div>
+                          <Typography variant="body2">
+                            {entry.vehicleType}
+                          </Typography>
+                        </Box>
+                      ))}
+                  </Box>
+                </Paper>
+              ) : (
+                <Container
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PulseLoader css={override} size={10} color={"#F37022"} />
+                </Container>
+              )}
+            </Grid>
+          </Grid>
+
           <Grid container spacing={2}>
-            <Grid item xs={8} spacing={3}>
+            <Grid item xs={12} spacing={3}>
               <Box display="flex" justifyContent="" marginBottom={2}>
                 <TextField
                   label="Từ ngày"
@@ -230,108 +415,191 @@ export default function Dashboard() {
                   </Container>
                 )}
               </Paper>
-
-              <Paper elevation={3}>
-                <Typography
-                  style={{ paddingTop: "20px", paddingBottom: "20px" }}
-                  variant="h5"
-                  align="center"
-                  color="textSecondary"
-                  className="fw-bold"
-                >
-                  Doanh thu theo ngày
-                </Typography>
-                {revenueData ? (
-                  <ResponsiveContainer width="100%" height={425}>
-                    <BarChart
-                      data={revenueData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value, name) =>
-                          new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(value)
-                        }
-                      />
-                      <Legend />
-                      <Bar name="Doanh thu" dataKey="revenue" fill="#f37022" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <Container
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+              <button
+                className={`btn-dashboard ${
+                  chartType === "day" ? "selected" : ""
+                }`}
+                onClick={() => handleChartTypeChange("day")}
+              >
+                Ngày
+              </button>
+              <button
+                className={`btn-dashboard ${
+                  chartType === "week" ? "selected" : ""
+                }`}
+                onClick={() => handleChartTypeChange("week")}
+              >
+                Tuần
+              </button>
+              <button
+                className={`btn-dashboard ${
+                  chartType === "month" ? "selected" : ""
+                }`}
+                onClick={() => handleChartTypeChange("month")}
+              >
+                Tháng
+              </button>
+              {chartType === "day" && (
+                <Paper elevation={3}>
+                  <Typography
+                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    className="fw-bold"
                   >
-                    <PulseLoader
-                      css={override} // Define the CSS styles for the loading spinner (you can customize it)
-                      size={10} // Set the size of the spinner
-                      color={"#F37022"} // Customize the color of the spinner// Set loading to true when reservationData is null
-                    />
-                  </Container>
-                )}
-              </Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper elevation={3} sx={{ marginTop: "70px" }}>
-                <Typography
-                  style={{ paddingTop: "30px" }}
-                  variant="h5"
-                  align="center"
-                  color="textSecondary"
-                  className="fw-bold"
-                >
-                  Phân bổ vai trò
-                </Typography>
-
-                {data && (
-                  <ResponsiveContainer width="100%" height={370}>
-                    <PieChart>
-                      <Pie dataKey="value" data={data} outerRadius={80} label>
-                        {data.map((entry, index) => (
-                          <Cell key={index} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
-                )}
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  flexDirection="row"
-                >
-                  {data &&
-                    data.map((entry, index) => (
-                      <Box
-                        className="mx-2"
-                        marginBottom={"70px"}
-                        key={index}
-                        display="flex"
-                        alignItems="center"
-                        flexDirection="row"
+                    Doanh thu theo ngày
+                  </Typography>
+                  {revenueData ? (
+                    <ResponsiveContainer width="100%" height={425}>
+                      <BarChart
+                        data={revenueData}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
                       >
-                        <div
-                          style={{
-                            backgroundColor: colors[index],
-                            width: 20,
-                            height: 20,
-                            marginRight: 5,
-                          }}
-                        ></div>
-                        <Typography variant="body2">{entry.name}</Typography>
-                      </Box>
-                    ))}
-                </Box>
-              </Paper>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip
+                          formatter={(value, name) =>
+                            new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(value)
+                          }
+                        />
+                        <Legend />
+                        <Bar
+                          name="Doanh thu"
+                          dataKey="revenue"
+                          fill="#f37022"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <Container
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <PulseLoader
+                        css={override} // Define the CSS styles for the loading spinner (you can customize it)
+                        size={10} // Set the size of the spinner
+                        color={"#F37022"} // Customize the color of the spinner// Set loading to true when reservationData is null
+                      />
+                    </Container>
+                  )}
+                </Paper>
+              )}
+
+              {chartType === "week" && (
+                <Paper elevation={3}>
+                  <Typography
+                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    className="fw-bold"
+                  >
+                    Doanh thu theo Tuần
+                  </Typography>
+                  {weeklyRevenueData ? (
+                    <ResponsiveContainer width="100%" height={425}>
+                      <BarChart
+                        data={Object.keys(weeklyRevenueData).map((week) => ({
+                          week: `Tuần ${week}`,
+                          revenue: weeklyRevenueData[week],
+                        }))}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="week" />
+                        <YAxis />
+                        <Tooltip
+                          formatter={(value) =>
+                            new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(value)
+                          }
+                        />
+                        <Legend />
+                        <Bar
+                          name="Doanh thu"
+                          dataKey="revenue"
+                          fill="#f37022"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    // Hiển thị spinner hoặc thông báo tải dữ liệu
+                    <Container
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <PulseLoader css={override} size={10} color={"#F37022"} />
+                    </Container>
+                  )}
+                </Paper>
+              )}
+
+              {chartType === "month" && (
+                <Paper elevation={3}>
+                  <Typography
+                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    className="fw-bold"
+                  >
+                    Doanh thu theo Tháng
+                  </Typography>
+                  {monthlyRevenueData ? (
+                    <ResponsiveContainer width="100%" height={425}>
+                      <BarChart
+                        data={Object.keys(monthlyRevenueData).map((month) => ({
+                          month,
+                          revenue: monthlyRevenueData[month],
+                        }))}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip
+                          formatter={(value) =>
+                            new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(value)
+                          }
+                        />
+                        <Legend />
+                        <Bar
+                          name="Doanh thu"
+                          dataKey="revenue"
+                          fill="#f37022"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    // Hiển thị spinner hoặc thông báo tải dữ liệu
+                    <Container
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <PulseLoader css={override} size={10} color={"#F37022"} />
+                    </Container>
+                  )}
+                </Paper>
+              )}
             </Grid>
           </Grid>
         </Container>

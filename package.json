@@ -15,6 +15,7 @@
     "bootstrap-4-react": "^0.0.59",
     "date-fns": "^2.30.0",
     "leaflet": "^1.9.4",
+    "moment": "^2.29.4",
     "polyline": "^0.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",

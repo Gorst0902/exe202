@@ -180,13 +180,13 @@ export default function Footer() {
             <i className="fa-solid fa-house" />
           </button>
         </Link>
-        <Link to="/lichsu">
+        <Link to="/driverHistory">
           <button>
             <i className="fa-solid fa-list" />
           </button>
         </Link>
         {/* tìm kiếm */}
-        <Link to="/timkiem">
+        <Link>
           <button className="search" onClick={handleOpen}>
             <i className="fa-solid fa-magnifying-glass" />
           </button>
@@ -244,7 +244,7 @@ export default function Footer() {
                       },
                     }}
                   />
-                  <button onClick={handleOKClick}>OK</button>
+                  <button className="ok" onClick={handleOKClick}>OK</button>
                 </Grid>
               </Grid>
             )}

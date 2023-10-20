@@ -182,7 +182,7 @@ export default function CurrentBooking() {
           <p className="text-center">Hiện tại bạn chưa nhận đơn nào</p>
           <div className="back">
             <button className="backButton" onClick={() => navigate("/driver")}>
-              Quay lại trang trước
+              Quay lại
             </button>
           </div>
         </div>

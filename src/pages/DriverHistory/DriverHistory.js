@@ -57,7 +57,7 @@ export default function DriverHistory() {
   return (
     <div>
       <Header title="Lịch sử đơn hàng" />
-      {data.length > 0 ? (
+      {data ? (
         <div className="driverHistory">
           {data.map((item, index) => (
             <div key={index} className="historyContent">

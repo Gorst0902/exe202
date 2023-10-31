@@ -154,7 +154,8 @@ function LocationComponent() {
                   data1.map((item, index) => (
                     <div key={index} onClick={() => handleItemClick(index)} className="journey-list-item">
                       {item.highPriorityLevel == true ? (
-                        <p className="priority">
+                        <p className="priority d-flex">
+                          <p>{item.distanceFromCurrentReservationToYou} km</p>
                           <i class="fa-solid fa-circle-check text-center"></i>
                         </p>
                       ) : (

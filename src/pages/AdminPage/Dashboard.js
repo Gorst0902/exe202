@@ -42,15 +42,16 @@ export default function Dashboard() {
   const defaultEndDate = currentDate; // Ngày hiện tại
   const [vehicleData, setVehicleData] = useState(null);
 
+  const [reservationData, setReservationData] = useState(null);
+
+  const [reservationByDayData, setReservationByDayData] = useState(null);
+  const [reservationByWeekData, setReservationByWeekData] = useState(null);
+  const [reservationByMonthData, setReservationByMonthData] = useState(null);
+
   const [dateRange, setDateRange] = useState({
     startDate: format(defaultStartDate, "yyyy-MM-dd"),
     endDate: format(defaultEndDate, "yyyy-MM-dd"),
   });
-
-  // const [dateRange, setDateRange] = useState({
-  //   startDate: "null",
-  //   endDate: "null",
-  // });
 
   const [loginData, setLoginData] = useState(null);
   const [revenueData, setRevenueData] = useState(null); // New state variable for revenue data
@@ -84,6 +85,17 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    fetch(
+      "https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetTotalReservationByVehicleType"
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setReservationData(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching reservation data:", error);
+      });
+
     // Gọi API và cập nhật state khi dữ liệu được tải về
     fetch(
       "https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetCountPercentUser"
@@ -99,8 +111,8 @@ export default function Dashboard() {
         );
 
         setData([
-          { name: "User", value: userPercent },
-          { name: "Driver", value: driverPercent },
+          { name: "User", value: userPercent, count: result.userCount },
+          { name: "Driver", value: driverPercent, count: result.driverCount },
         ]);
       })
       .catch((error) => {
@@ -170,11 +182,75 @@ export default function Dashboard() {
         // Xử lý lỗi khi không thể lấy dữ liệu
         console.error("Error fetching revenue data:", error);
       });
+
+    fetch(
+      `https://tsdlinuxserverapi.azurewebsites.net/api/DashBoard/GetTotalReservationByDay?from=${dateRange.startDate}&to=${dateRange.endDate}`
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setReservationByDayData(result.totalReservationDayByDayResponses);
+      })
+      .catch((error) => {
+        console.error("Error fetching reservation by day data:", error);
+      });
+
+    if (reservationByDayData) {
+      const weeklyData = {};
+      const monthlyData = {};
+
+      reservationByDayData.forEach((entry) => {
+        const date = entry.date;
+        const weekOfYear = moment(date).isoWeek();
+        const month = moment(date).format("MM/YYYY");
+
+        // Tính toán số đơn theo tuần
+        if (!weeklyData[weekOfYear]) {
+          weeklyData[weekOfYear] = 0;
+        }
+        weeklyData[weekOfYear] += entry.totalReservations;
+
+        // Tính toán số đơn theo tháng
+        if (!monthlyData[month]) {
+          monthlyData[month] = 0;
+        }
+        monthlyData[month] += entry.totalReservations;
+      });
+
+      setReservationByWeekData(weeklyData);
+      setReservationByMonthData(monthlyData);
+    }
   }, [dateRange]);
 
-  console.log(data);
-  console.log(loginData);
-  console.log(revenueData);
+  useEffect(() => {
+    if (reservationByDayData) {
+      const weeklyData = {};
+      const monthlyData = {};
+
+      reservationByDayData.forEach((entry) => {
+        const date = entry.date;
+        const weekOfYear = moment(date).isoWeek();
+        const month = moment(date).format("MM/YYYY");
+
+        // Tính toán số đơn theo tuần
+        if (!weeklyData[weekOfYear]) {
+          weeklyData[weekOfYear] = 0;
+        }
+        weeklyData[weekOfYear] += entry.totalReservations;
+
+        // Tính toán số đơn theo tháng
+        if (!monthlyData[month]) {
+          monthlyData[month] = 0;
+        }
+        monthlyData[month] += entry.totalReservations;
+      });
+
+      setReservationByWeekData(weeklyData);
+      setReservationByMonthData(monthlyData);
+    }
+  }, [reservationByDayData]);
+
+  console.log(reservationByWeekData);
+  console.log(reservationByMonthData);
 
   const colors = ["#0074e4", "#f37022"];
   const customColors = [
@@ -214,7 +290,7 @@ export default function Dashboard() {
         <Container>
           <h4 className="mb-4">Dashboard</h4>
           <Grid className="mb-4" container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               {" "}
               <Paper elevation={3}>
                 <Typography
@@ -263,13 +339,15 @@ export default function Dashboard() {
                             marginRight: 5,
                           }}
                         ></div>
-                        <Typography variant="body2">{entry.name}</Typography>
+                        <Typography variant="body2">
+                          {entry.name}: {entry.count}
+                        </Typography>
                       </Box>
                     ))}
                 </Box>
               </Paper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               {" "}
               {vehicleData ? (
                 <Paper elevation={3}>
@@ -347,6 +425,82 @@ export default function Dashboard() {
                 </Container>
               )}
             </Grid>
+            {reservationData ? (
+              <Grid item xs={4}>
+                <Paper elevation={3}>
+                  <Typography
+                    style={{ paddingTop: "30px" }}
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    className="fw-bold"
+                  >
+                    Số lượng đơn theo loại xe
+                  </Typography>
+                  <ResponsiveContainer width="100%" height={270}>
+                    <PieChart>
+                      <Pie
+                        dataKey="totalComplete"
+                        data={reservationData}
+                        nameKey="vehicleTypeName"
+                        outerRadius={80}
+                        label
+                      >
+                        {reservationData.map((entry, index) => (
+                          <Cell
+                            key={index}
+                            fill={customColors[index % customColors.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    flexDirection="row"
+                    flexWrap="wrap"
+                  >
+                    {reservationData &&
+                      reservationData.map((entry, index) => (
+                        <Box
+                          className="mx-2"
+                          marginBottom={"20px"}
+                          key={index}
+                          display="flex"
+                          alignItems="center"
+                          flexDirection="row"
+                          width="33.33%" // Sử dụng 33.33% để chia thành 3 cột
+                        >
+                          <div
+                            style={{
+                              backgroundColor: customColors[index],
+                              width: 20,
+                              height: 20,
+                              marginRight: 5,
+                            }}
+                          ></div>
+                          <Typography variant="body2">
+                            {entry.vehicleTypeName}
+                          </Typography>
+                        </Box>
+                      ))}
+                  </Box>
+                </Paper>
+              </Grid>
+            ) : (
+              // Loading spinner or message
+              <Container
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <PulseLoader css={override} size={10} color={"#F37022"} />
+              </Container>
+            )}
           </Grid>
 
           <Grid container spacing={2}>
@@ -440,165 +594,346 @@ export default function Dashboard() {
                 Tháng
               </button>
               {chartType === "day" && (
-                <Paper elevation={3}>
-                  <Typography
-                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
-                    variant="h5"
-                    align="center"
-                    color="textSecondary"
-                    className="fw-bold"
-                  >
-                    Doanh thu theo ngày
-                  </Typography>
-                  {revenueData ? (
-                    <ResponsiveContainer width="100%" height={425}>
-                      <BarChart
-                        data={revenueData}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Paper elevation={3}>
+                      <Typography
+                        style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                        variant="h5"
+                        align="center"
+                        color="textSecondary"
+                        className="fw-bold"
                       >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip
-                          formatter={(value, name) =>
-                            new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(value)
-                          }
+                        Doanh thu theo ngày
+                      </Typography>
+                      {revenueData ? (
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={revenueData}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip
+                              formatter={(value, name) =>
+                                new Intl.NumberFormat("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                }).format(value)
+                              }
+                            />
+                            <Legend />
+                            <Bar
+                              name="Doanh thu"
+                              dataKey="revenue"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <Container
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PulseLoader
+                            css={override} // Define the CSS styles for the loading spinner (you can customize it)
+                            size={10} // Set the size of the spinner
+                            color={"#F37022"} // Customize the color of the spinner// Set loading to true when reservationData is null
+                          />
+                        </Container>
+                      )}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {reservationByDayData ? (
+                      <Paper elevation={3} className="mb-5">
+                        <Typography
+                          style={{
+                            paddingTop: "20px",
+                            paddingBottom: "20px",
+                          }}
+                          variant="h5"
+                          align="center"
+                          color="textSecondary"
+                          className="fw-bold"
+                        >
+                          Số đơn theo ngày
+                        </Typography>
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={reservationByDayData}
+                            margin={{
+                              top: 5,
+                              right: 30,
+                              left: 20,
+                              bottom: 20,
+                            }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar
+                              name="Số đơn"
+                              dataKey="totalReservations"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </Paper>
+                    ) : (
+                      <Container
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <PulseLoader
+                          css={override} // Define the CSS styles for the loading spinner (you can customize it)
+                          size={10} // Set the size of the spinner
+                          color={"#F37022"} // Customize the color of the spinner
                         />
-                        <Legend />
-                        <Bar
-                          name="Doanh thu"
-                          dataKey="revenue"
-                          fill="#f37022"
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <Container
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <PulseLoader
-                        css={override} // Define the CSS styles for the loading spinner (you can customize it)
-                        size={10} // Set the size of the spinner
-                        color={"#F37022"} // Customize the color of the spinner// Set loading to true when reservationData is null
-                      />
-                    </Container>
-                  )}
-                </Paper>
+                      </Container>
+                    )}
+                  </Grid>
+                </Grid>
               )}
 
               {chartType === "week" && (
-                <Paper elevation={3}>
-                  <Typography
-                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
-                    variant="h5"
-                    align="center"
-                    color="textSecondary"
-                    className="fw-bold"
-                  >
-                    Doanh thu theo Tuần
-                  </Typography>
-                  {weeklyRevenueData ? (
-                    <ResponsiveContainer width="100%" height={425}>
-                      <BarChart
-                        data={Object.keys(weeklyRevenueData).map((week) => ({
-                          week: `Tuần ${week}`,
-                          revenue: weeklyRevenueData[week],
-                        }))}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Paper elevation={3}>
+                      <Typography
+                        style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                        variant="h5"
+                        align="center"
+                        color="textSecondary"
+                        className="fw-bold"
                       >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="week" />
-                        <YAxis />
-                        <Tooltip
-                          formatter={(value) =>
-                            new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(value)
-                          }
+                        Doanh thu theo tuần
+                      </Typography>
+                      {weeklyRevenueData ? (
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={Object.keys(weeklyRevenueData).map(
+                              (week) => ({
+                                week: `Tuần ${week}`,
+                                revenue: weeklyRevenueData[week],
+                              })
+                            )}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="week" />
+                            <YAxis />
+                            <Tooltip
+                              formatter={(value) =>
+                                new Intl.NumberFormat("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                }).format(value)
+                              }
+                            />
+                            <Legend />
+                            <Bar
+                              name="Doanh thu"
+                              dataKey="revenue"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        // Hiển thị spinner hoặc thông báo tải dữ liệu
+                        <Container
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PulseLoader
+                            css={override}
+                            size={10}
+                            color={"#F37022"}
+                          />
+                        </Container>
+                      )}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {reservationByWeekData ? (
+                      <Paper elevation={3} className="mb-5">
+                        <Typography
+                          style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                          variant="h5"
+                          align="center"
+                          color="textSecondary"
+                          className="fw-bold"
+                        >
+                          Số đơn theo tuần
+                        </Typography>
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={Object.keys(reservationByWeekData).map(
+                              (week) => ({
+                                week: `Tuần ${week}`,
+                                reservations: reservationByWeekData[week],
+                              })
+                            )}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="week" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar
+                              name="Số đơn"
+                              dataKey="reservations"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </Paper>
+                    ) : (
+                      <Container
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <PulseLoader
+                          css={override} // Define the CSS styles for the loading spinner (you can customize it)
+                          size={10} // Set the size of the spinner
+                          color={"#F37022"} // Customize the color of the spinner
                         />
-                        <Legend />
-                        <Bar
-                          name="Doanh thu"
-                          dataKey="revenue"
-                          fill="#f37022"
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    // Hiển thị spinner hoặc thông báo tải dữ liệu
-                    <Container
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <PulseLoader css={override} size={10} color={"#F37022"} />
-                    </Container>
-                  )}
-                </Paper>
+                      </Container>
+                    )}
+                  </Grid>
+                </Grid>
               )}
 
               {chartType === "month" && (
-                <Paper elevation={3}>
-                  <Typography
-                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
-                    variant="h5"
-                    align="center"
-                    color="textSecondary"
-                    className="fw-bold"
-                  >
-                    Doanh thu theo Tháng
-                  </Typography>
-                  {monthlyRevenueData ? (
-                    <ResponsiveContainer width="100%" height={425}>
-                      <BarChart
-                        data={Object.keys(monthlyRevenueData).map((month) => ({
-                          month,
-                          revenue: monthlyRevenueData[month],
-                        }))}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Paper elevation={3}>
+                      <Typography
+                        style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                        variant="h5"
+                        align="center"
+                        color="textSecondary"
+                        className="fw-bold"
                       >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip
-                          formatter={(value) =>
-                            new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(value)
-                          }
+                        Doanh thu theo tháng
+                      </Typography>
+                      {monthlyRevenueData ? (
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={Object.keys(monthlyRevenueData).map(
+                              (month) => ({
+                                month,
+                                revenue: monthlyRevenueData[month],
+                              })
+                            )}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="month" />
+                            <YAxis />
+                            <Tooltip
+                              formatter={(value) =>
+                                new Intl.NumberFormat("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                }).format(value)
+                              }
+                            />
+                            <Legend />
+                            <Bar
+                              name="Doanh thu"
+                              dataKey="revenue"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        // Hiển thị spinner hoặc thông báo tải dữ liệu
+                        <Container
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PulseLoader
+                            css={override}
+                            size={10}
+                            color={"#F37022"}
+                          />
+                        </Container>
+                      )}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {" "}
+                    {reservationByMonthData ? (
+                      <Paper elevation={3} className="mb-5">
+                        <Typography
+                          style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                          variant="h5"
+                          align="center"
+                          color="textSecondary"
+                          className="fw-bold"
+                        >
+                          Số đơn theo tháng
+                        </Typography>
+                        <ResponsiveContainer width="100%" height={425}>
+                          <BarChart
+                            data={Object.keys(reservationByMonthData).map(
+                              (month) => ({
+                                month,
+                                reservations: reservationByMonthData[month],
+                              })
+                            )}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="month" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar
+                              name="Số đơn"
+                              dataKey="reservations"
+                              fill="#f37022"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </Paper>
+                    ) : (
+                      <Container
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <PulseLoader
+                          css={override} // Define the CSS styles for the loading spinner (you can customize it)
+                          size={10} // Set the size of the spinner
+                          color={"#F37022"} // Customize the color of the spinner
                         />
-                        <Legend />
-                        <Bar
-                          name="Doanh thu"
-                          dataKey="revenue"
-                          fill="#f37022"
-                        />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    // Hiển thị spinner hoặc thông báo tải dữ liệu
-                    <Container
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <PulseLoader css={override} size={10} color={"#F37022"} />
-                    </Container>
-                  )}
-                </Paper>
+                      </Container>
+                    )}
+                  </Grid>
+                </Grid>
               )}
             </Grid>
           </Grid>

@@ -40,6 +40,8 @@ import DriverHistory from "./pages/DriverHistory/DriverHistory";
 import UserReservation from "./pages/UserHistory/UserReservation";
 import ForgetPassword from "./pages/ResetPassword/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import ConfirmOrder from "./pages/Booking/ConfirmOrder";
+import PaymentFailure from "./pages/Booking/PaymentFailed";
 
 function App() {
   // if (localStorage.getItem("userId")) {
@@ -79,6 +81,8 @@ function App() {
             <Route path="/userhistory/:id" element={<HistoryDetail />} />
             <Route path="/service" element={<ServiceList />} />
             <Route path="/userreservation" element={<UserReservation />} />
+            <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
+            <Route path="/payment-failed" element={<PaymentFailure />} />
 
             {/* Admin Page */}
             <Route path="/admin/login" element={<AdminLoginForm />} />

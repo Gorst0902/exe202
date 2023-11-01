@@ -15,7 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import momo from "../images/momo.png";
 import zalo from "../images/zalo.png";
-import vnpay from "../images/vnpay.png";
+import paypal from "../images/paypal.png";
 
 function AddressForm(props) {
   const { token } = useAuth();
@@ -146,7 +146,9 @@ function AddressForm(props) {
         // Xử lý kết quả từ API ở đây
         console.log(response.data);
         // Chuyển hướng hoặc thực hiện các hành động cần thiết sau khi đặt hàng thành công
-
+        const order_id = response.data.id;
+        // Chuyển hướng đến trang khác và truyền order_id qua URL
+        navigate(`/confirm-order/${order_id}`);
         // Sau khi đặt hàng thành công, kiểm tra loại thiết DDbị
         const { deeplink, paymentUrl } = response.data;
 
@@ -157,9 +159,11 @@ function AddressForm(props) {
           );
 
         if (isMobileDevice) {
-          window.location.href = deeplink;
+          // window.location.href = deeplink;
+          window.open(deeplink, "_blank");
         } else {
-          window.location.href = paymentUrl;
+          // window.location.href = paymentUrl;
+          window.open(paymentUrl, "_blank");
         }
         setIsButtonDisabled(false);
         // navigate("/ordersuccess"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
@@ -503,7 +507,7 @@ function AddressForm(props) {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  value="VnPay"
+                  value="Paypal"
                   control={
                     <Radio
                       sx={{
@@ -516,11 +520,11 @@ function AddressForm(props) {
                   label={
                     <div>
                       <img
-                        src={vnpay}
-                        alt="VnPay"
+                        src={paypal}
+                        alt="PayPal"
                         style={{ marginRight: "8px", width: "20px" }}
                       />
-                      VnPay
+                      PayPal
                     </div>
                   }
                 />

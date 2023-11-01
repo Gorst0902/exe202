@@ -3,7 +3,7 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Button, Container, Divider, Grid, Typography } from "@mui/material";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { format } from "date-fns";
 import UserHeader from "../UserPage/UserHeader";
@@ -26,6 +26,7 @@ function UserReservation() {
   const userId = localStorage.getItem("userId");
   const [loading, setLoading] = useState(true); // Biến trạng thái cho việc hiển thị BeatLoader
   const { token } = useAuth();
+  const navigate = useNavigate();
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
@@ -78,18 +79,23 @@ function UserReservation() {
   console.log(paymentLink);
   // Hàm xử lý khi người dùng bấm vào nút "Thanh toán ngay"
   const handlePayment = () => {
+    const { deeplink, paymentUrl } = reservationData.linkPayment;
+    const order_id = reservationData.linkPayment.id;
+    // Chuyển hướng đến trang khác và truyền order_id qua URL
+    navigate(`/confirm-order/${order_id}`);
     const isMobileDevice =
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
       );
 
     if (isMobileDevice) {
-      window.location.href = paymentLink.deeplink;
+      // window.location.href = deeplink;
+      window.open(deeplink, "_blank");
     } else {
-      window.location.href = paymentLink.paymentUrl;
+      // window.location.href = paymentUrl;
+      window.open(paymentUrl, "_blank");
     }
   };
-
   return (
     <>
       <UserHeader />

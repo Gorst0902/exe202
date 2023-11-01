@@ -1,18 +1,26 @@
 import React from "react";
-import { Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import error from "../images/fail.png";
+import failedImg from "../images/remove.png";
 import UserHeader from "../UserPage/UserHeader";
-import Footer from "../Footer/Footer";
+import { Button, Container, Typography } from "@mui/material";
 import UserFooter from "../UserPage/UserFooter";
 
 const specialTextStyle = {
   fontSize: "30px", // Kích thước chữ
   fontWeight: "bold", // Độ đậm
-  color: "#F37022", // Màu chữ
+  color: "#e94030", // Màu chữ
+  textTransform: "uppercase", // Chuyển đổi chữ thành HOA
+};
+const button = {
+  border: "1px solid #F37022",
+  padding: "10px",
+  borderRadius: "15px",
+  backgroundColor: "#F37022",
+  fontWeight: "bold",
+  color: "white",
 };
 
-export default function OrderFail() {
+const PaymentFailure = () => {
   return (
     <div>
       <UserHeader />
@@ -26,17 +34,22 @@ export default function OrderFail() {
           height: "60vh",
         }}
       >
-        <img style={{ width: "90px" }} src={error} alt="Error" />
+        <img style={{ width: "90px" }} src={failedImg} alt="Error" />
         <Typography
-          className="mt-2"
+          className="mt-4"
           variant="h4"
           gutterBottom
           style={specialTextStyle}
         >
           Thanh toán thất bại
         </Typography>
+        <Link to="/userreservation">
+          <button style={button}>Xem đơn hàng</button>
+        </Link>
       </Container>
       <UserFooter />
     </div>
   );
-}
+};
+
+export default PaymentFailure;

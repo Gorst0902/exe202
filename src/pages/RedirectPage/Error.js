@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import error from "../images/404.png";
 import UserHeader from "../UserPage/UserHeader";
 import Footer from "../Footer/Footer";
+import UserFooter from "../UserPage/UserFooter";
 
 const specialTextStyle = {
   fontSize: "30px", // Kích thước chữ
@@ -36,7 +37,7 @@ export default function ErrorPage() {
           Page not found
         </Typography>
       </Container>
-      <Footer />
+      <UserFooter />
     </div>
   );
 }

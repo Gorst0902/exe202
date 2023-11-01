@@ -15,7 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import momo from "../images/momo.png";
 import zalo from "../images/zalo.png";
-import vnpay from "../images/vnpay.png";
+import paypal from "../images/paypal.png";
 
 function AddressForm(props) {
   const { token } = useAuth();
@@ -507,7 +507,7 @@ function AddressForm(props) {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  value="VnPay"
+                  value="Paypal"
                   control={
                     <Radio
                       sx={{
@@ -520,11 +520,11 @@ function AddressForm(props) {
                   label={
                     <div>
                       <img
-                        src={vnpay}
-                        alt="VnPay"
+                        src={paypal}
+                        alt="PayPal"
                         style={{ marginRight: "8px", width: "20px" }}
                       />
-                      VnPay
+                      PayPal
                     </div>
                   }
                 />

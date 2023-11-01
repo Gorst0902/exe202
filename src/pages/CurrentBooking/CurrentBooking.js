@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
 import "../ReservationDetail/ReservationDetail.css";
+import Footer from "../Footer/Footer";
 
 export default function CurrentBooking() {
   const { token } = useAuth(); // Make sure to access the token correctly from your authentication context.
@@ -42,7 +43,7 @@ export default function CurrentBooking() {
 
         if (response.status === 204) {
           // No content, return an empty object or an appropriate value
-          setData({});
+          setData(null);
         } else {
           const responseData = await response.json();
           setData(responseData);
@@ -98,7 +99,7 @@ export default function CurrentBooking() {
 
       if (!response.ok) {
         console.log(response);
-        
+        setCompletedData(null);
         throw new Error(`Error fetching data: ${response.status}`);
       }
 
@@ -112,12 +113,14 @@ export default function CurrentBooking() {
     }
   };
 
+  console.log("completed", completedData);
+
   return (
     <div>
-      <Header />
-      <div className="detail">
-        <div className="currentBooking">
-          {data && (
+      <Header title="Đơn hàng đang nhận" />
+      {data ? (
+        <div className="detail">
+          <div className="currentBooking">
             <div>
               <div className="user__info">
                 <p>
@@ -141,7 +144,7 @@ export default function CurrentBooking() {
               </div>
               <h5>Thông tin hàng hóa</h5>
               <div className="goods__content">
-                {data.isNow == true ? (
+                {data.isNow === true ? (
                   <p>
                     Thời gian bốc hàng: {formatDateTime(data.pickUpDateTime)}
                   </p>
@@ -152,16 +155,16 @@ export default function CurrentBooking() {
                 <p>Trọng tải: {data.goodsDto.weight}kg</p>
               </div>
               <div className="shippingButton">
-                {data.reservationStatus == "OnTheWayToPickupPoint" ? (
+                {data.reservationStatus === "OnTheWayToPickupPoint" ? (
                   <div>
-                    <button className="call">Gọi ngay (sdt người gửi)</button>
+                    <button className="call">Gọi ngay</button>
                     <button className="accept" onClick={handleShipping}>
                       Đã tới điểm nhận hàng
                     </button>
                   </div>
                 ) : (
                   <div>
-                    <button className="call">Gọi ngay (sdt người nhận)</button>
+                    <button className="call">Gọi ngay</button>
                     <button
                       className="accept"
                       onClick={handleShippingCompleted}
@@ -172,9 +175,18 @@ export default function CurrentBooking() {
                 )}
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <p className="text-center">Hiện tại bạn chưa nhận đơn nào</p>
+          <div className="back">
+            <button className="backButton" onClick={() => navigate("/driver")}>
+              Quay lại
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

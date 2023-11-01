@@ -7,7 +7,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ReservationShipping from "../ReservationShipping/ReservationShipping";
 import "../ReservationDetail/ReservationDetail.css";
-import CurrentBooking from './../CurrentBooking/CurrentBooking';
+import CurrentBooking from "./../CurrentBooking/CurrentBooking";
 
 export default function ReservationDetail() {
   const { reservationId } = useParams();
@@ -52,43 +52,40 @@ export default function ReservationDetail() {
     return data;
   }
 
-  async function reservationAction(reservationId) {
-    const userId = localStorage.getItem("userId");
-    console.log("userId: ", userId);
-    const response = await fetch(
-      `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/DriverReservationAction?driverId=${userId}&reservationId=${reservationId}&action=0`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`, // Include your authentication token here
-          "Content-Type": "application/json", // You can adjust content type as needed
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`Error fetching reservation detail: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  }
-
   async function handleReservationActionAndSetResponse(reservationId) {
     try {
-      const response = await reservationAction(reservationId);
-      // Handle the response as needed
-      console.log(response);
-      navigate("/currentBooking");
-      return response; // Return the response data
-    } catch (error) {
-      if (error.message === "Failed to fetch") {
-        setError("Network error. Please check your internet connection.");
-      } else if (error.message === "Another specific error message") {
-        setError("An error occurred due to a specific reason. Please try again later.");
-      } else {
-        setError("An unknown error occurred. Please contact support for assistance.");
+      const userId = localStorage.getItem("userId");
+      console.log("userId: ", userId);
+
+      const response = await fetch(
+        `https://tsdlinuxserverapi.azurewebsites.net/api/Reservation/DriverReservationAction?driverId=${userId}&reservationId=${reservationId}&action=0`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`, // Include your authentication token here
+            "Content-Type": "application/json", // You can adjust content type as needed
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json(); // Parse the error response
+        console.log("Error response:", errorData.errors);
+        throw new Error(
+          `Error fetching reservation detail: ${response.status}`
+        );
       }
-      throw error;
+
+      const data = await response.json();
+      // Handle the response as needed
+      console.log(data);
+
+      navigate("/currentBooking");
+      return data; // Return the response data
+    } catch (errors) {
+      console.log(errors);
+      console.log("failed");
+      setError("Xe của bạn không phù hợp với đơn hàng này");
     }
   }
 
@@ -144,11 +141,7 @@ export default function ReservationDetail() {
           </div>
         </div>
       </div>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+      {error && <div className="error-message">{error}</div>}
       <div className="detail__footer">
         <button
           className="orderCar"

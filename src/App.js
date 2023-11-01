@@ -36,6 +36,7 @@ import UserTransaction from "./pages/SettingPage/UserTransaction";
 import ReservationShipping from "./pages/ReservationShipping/ReservationShipping";
 import ServiceList from "./pages/UserPage/ServiceList";
 import CurrentBooking from "./pages/CurrentBooking/CurrentBooking";
+import DriverHistory from "./pages/DriverHistory/DriverHistory";
 import UserReservation from "./pages/UserHistory/UserReservation";
 import ForgetPassword from "./pages/ResetPassword/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -71,7 +72,8 @@ function App() {
               path="/reservationShipping"
               element={<ReservationShipping />}
             />
-            <Route path="currentBooking" element={<CurrentBooking />} />
+            <Route path="/driverHistory" element={<DriverHistory />} />
+            <Route path="/currentBooking" element={<CurrentBooking />} />
             <Route path="/user" element={<UserPage />} />
             <Route path="/create" element={<AddressAutocomplete />} />
             <Route path="/book" element={<AddressForm />} />

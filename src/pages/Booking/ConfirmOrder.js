@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Typography } from "@mui/material";
 import confirmImg from "../images/confirm.png";
 import UserHeader from "../UserPage/UserHeader";
-import Footer from "../Footer/Footer";
+import UserFooter from "../UserPage/UserFooter";
 
 const confirmText = {
   fontSize: "24px", // Kích thước chữ
@@ -79,7 +79,7 @@ const ConfirmOrder = () => {
           </Button>
         </div>
       </Container>
-      <Footer />
+      <UserFooter />
     </div>
   );
 };

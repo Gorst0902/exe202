@@ -279,7 +279,7 @@ function AddressAutocomplete() {
 
       // Gửi yêu cầu đến API Geocode để lấy địa chỉ từ tọa độ
       fetch(
-        `https://rsapi.goong.io/Geocode?latlng=${lat},${lng}&api_key=oLlIcCqn7OC5JAj9MaEthx4oKtQJvyIZXYrxyiCN`
+        `https://rsapi.goong.io/Geocode?latlng=${lat},${lng}&api_key=xHCBZ2ReaVMtYe1rhk9p9sFpKsZF8Sp3oDUT0M0r`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -336,7 +336,7 @@ function AddressAutocomplete() {
     try {
       // Gọi API GET để lấy danh sách địa chỉ gợi ý dựa trên inputValue
       const response = await fetch(
-        `https://rsapi.goong.io/Place/AutoComplete?input=${inputValue}&api_key=oLlIcCqn7OC5JAj9MaEthx4oKtQJvyIZXYrxyiCN`
+        `https://rsapi.goong.io/Place/AutoComplete?input=${inputValue}&api_key=xHCBZ2ReaVMtYe1rhk9p9sFpKsZF8Sp3oDUT0M0r`
       );
       const data = await response.json();
 
@@ -359,7 +359,7 @@ function AddressAutocomplete() {
     try {
       // Gọi API geocoding để lấy kinh độ và vĩ độ dựa trên place_id
       const response = await fetch(
-        `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=oLlIcCqn7OC5JAj9MaEthx4oKtQJvyIZXYrxyiCN`
+        `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=xHCBZ2ReaVMtYe1rhk9p9sFpKsZF8Sp3oDUT0M0r`
       );
       const data = await response.json();
 
@@ -383,7 +383,7 @@ function AddressAutocomplete() {
 
         // Gọi API đo khoảng cách
         const response = await fetch(
-          `https://rsapi.goong.io/Direction?origin=${originLatLng}&destination=${destinationLatLng}&vehicle=truck&api_key=oLlIcCqn7OC5JAj9MaEthx4oKtQJvyIZXYrxyiCN`
+          `https://rsapi.goong.io/Direction?origin=${originLatLng}&destination=${destinationLatLng}&vehicle=truck&api_key=xHCBZ2ReaVMtYe1rhk9p9sFpKsZF8Sp3oDUT0M0r`
         );
         const data = await response.json();
 

@@ -249,8 +249,8 @@ function UserReservation() {
                     borderRadius: "12px",
                     backgroundColor: "#F37022",
                     height: "50px",
-                    width: "100%", // Make the button full-width
-                    color: "white", // Set text color to white for better visibility
+                    width: "100%",
+                    color: "white",
                   }}
                 >
                   <a

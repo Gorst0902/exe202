@@ -146,9 +146,9 @@ function AddressForm(props) {
         // Xử lý kết quả từ API ở đây
         console.log(response.data);
         // Chuyển hướng hoặc thực hiện các hành động cần thiết sau khi đặt hàng thành công
-        const order_id = response.data.id;
+        // const order_id = response.data.id;
         // Chuyển hướng đến trang khác và truyền order_id qua URL
-        navigate(`/confirm-order/${order_id}`);
+        // navigate(`/confirm-order/${order_id}`);
         // Sau khi đặt hàng thành công, kiểm tra loại thiết DDbị
         const { deeplink, paymentUrl } = response.data;
 
@@ -159,11 +159,11 @@ function AddressForm(props) {
           );
 
         if (isMobileDevice) {
-          // window.location.href = deeplink;
-          window.open(deeplink, "_blank");
+          window.location.href = deeplink;
+          // window.open(deeplink, "_blank");
         } else {
-          // window.location.href = paymentUrl;
-          window.open(paymentUrl, "_blank");
+          window.location.href = paymentUrl;
+          // window.open(paymentUrl, "_blank");
         }
         setIsButtonDisabled(false);
         // navigate("/ordersuccess"); // Ví dụ: Chuyển hướng đến trang thông báo đặt hàng thành công
